@@ -8,12 +8,58 @@ public class PlayerController : MonoBehaviour
     public Transform CameraMountPoint;
     public Transform Camera;
 
+    public GameObject LassoPrefab;
+    public Transform LassoMountPoint;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
+    {
+        Move();
+        Lasso();
+    }
+
+    void Lasso()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            var lasso = Instantiate(LassoPrefab);
+            var lassoScript = lasso.GetComponent<LassoScript>();
+            StartCoroutine(ThrowLasso(lassoScript));
+        }
+    }
+
+    IEnumerator ThrowLasso(LassoScript lassoScript)
+    {
+        var collisionFlag = false;
+        lassoScript.CollisionCallback = () =>
+        {
+            collisionFlag = true;
+        };
+
+        lassoScript.StartPoint = LassoMountPoint.position;
+        var start = LassoMountPoint.position;
+        var forward = this.transform.forward;
+        var amount = 1.0f;
+        lassoScript.EntPoint = start + forward * amount;
+
+        yield return new WaitForFixedUpdate();
+
+        while (!collisionFlag && amount < 20.0f)
+        {
+            lassoScript.StartPoint = LassoMountPoint.position;
+            amount += 0.1f;
+            lassoScript.EntPoint = start + forward * amount;
+
+            yield return new WaitForFixedUpdate();
+        }
+        Destroy(lassoScript.gameObject);
+    }
+
+    void Move()
     {
         var mouseX = Input.GetAxis("Mouse X");
         var mouseY = Input.GetAxis("Mouse Y");
