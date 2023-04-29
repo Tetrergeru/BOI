@@ -6,10 +6,13 @@ public enum AnimalState
 {
     Chilling,
     Pulled,
+    Rided,
 }
 
 public class AnimalScript : MonoBehaviour
 {
+    public Rigidbody Body;
+
     public AnimalState State = AnimalState.Chilling;
 
     public Transform MountPoint;
@@ -35,7 +38,7 @@ public class AnimalScript : MonoBehaviour
             var vec = (_lassoLoop.position - _lassoMountPoint.position).normalized;
             vec.y = 0;
 
-            this.transform.rotation = Quaternion.LookRotation(vec, Vector3.up);
+            this.transform.rotation = Quaternion.LookRotation(-vec, Vector3.up);
             this.transform.position = _lassoLoop.position
                 + vec * horDist
                 + Vector3.down * NeckPoint.localPosition.y * this.transform.localScale.x;
@@ -47,5 +50,13 @@ public class AnimalScript : MonoBehaviour
         _lassoLoop = lasso.LoopBone;
         _lassoMountPoint = player.LassoMountPoint;
         State = AnimalState.Pulled;
+    }
+
+    public void GetRided()
+    {
+        Destroy(Body);
+        State = AnimalState.Rided;
+        _lassoLoop = null;
+        _lassoMountPoint = null;
     }
 }
