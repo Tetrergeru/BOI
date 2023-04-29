@@ -6,10 +6,26 @@ public class LassoCollisionScript : MonoBehaviour
 {
     public LassoScript LassoScript;
 
-    private void OnTriggerEnter(Collider other)
+    private bool _collision = false;
+    private AnimalScript _animal = null;
+
+    void LateUpdate()
     {
-        var neck = other.GetComponent<NeckScript>();
-        LassoScript.LoopCollision(neck == null ? null : neck.Animal);
+        if (_collision)
+        {
+            Debug.Log($"Animal = {_animal != null}");
+            LassoScript.LoopCollision(_animal);
+        }
+        _animal = null;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        _collision = true;
+        var neck = other.GetComponent<NeckScript>();
+        if (neck != null) 
+        {
+            _animal = neck.Animal;
+        }
+    }
 }

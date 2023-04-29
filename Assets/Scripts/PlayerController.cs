@@ -166,6 +166,11 @@ public class PlayerController : MonoBehaviour
 
         BoiTransform.parent = parent;
         BoiTransform.transform.localPosition = Vector3.zero;
+
+        foreach(var child in this.transform.GetComponentsInChildren<Transform>()) 
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
     }
 
     void UpdateAnimationSpeed()

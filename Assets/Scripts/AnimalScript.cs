@@ -46,7 +46,6 @@ public class AnimalScript : MonoBehaviour
                 {
                     State = (Random.Range(0.0f, 1.0f) < 0.3f ? AnimalState.RunningAround : AnimalState.WalkingAround);
                     _walkAroundVector = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-                    Debug.Log($"{Name} started walking");
                 }
             }
         }
@@ -73,7 +72,6 @@ public class AnimalScript : MonoBehaviour
 
             Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50);
             this.transform.rotation = Quaternion.LookRotation(Body.velocity, Vector3.up);
-            Debug.Log($"{Name} walking {Body.velocity}");
             SetSpeed(Body.velocity.magnitude);
 
             _timeUntilWalkCheck -= Time.deltaTime;
@@ -84,8 +82,6 @@ public class AnimalScript : MonoBehaviour
                 {
                     State = AnimalState.Chilling;
                     Body.velocity = Vector3.zero;
-
-                    Debug.Log($"{Name} stopped walking");
                 }
                 else if (Random.Range(0.0f, 1.0f) < 0.2)
                 {
