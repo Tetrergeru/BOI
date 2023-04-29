@@ -79,9 +79,13 @@ public class PlayerController : MonoBehaviour
         lassoScript.lassoMode = LassoMode.Straight;
 
         var pullingSpeed = 0.5f;
+        var end = start + forward * amount;
+
         if (animal != null)
         {
             pullingSpeed = 0.1f;
+            end = animal.NeckPoint.position;
+            
             CameraShake.Shake(0.7f);
             animal.GetPulled(lassoScript, this);
         }
@@ -90,7 +94,7 @@ public class PlayerController : MonoBehaviour
         {
             lassoScript.StartPoint = LassoMountPoint.position;
             amount -= pullingSpeed;
-            lassoScript.EntPoint = start + forward * amount;
+            lassoScript.EntPoint = LassoMountPoint.position + (end - LassoMountPoint.position).normalized * amount;
             yield return new WaitForEndOfFrame();
         }
 

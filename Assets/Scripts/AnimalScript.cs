@@ -36,7 +36,9 @@ public class AnimalScript : MonoBehaviour
             vec.y = 0;
 
             this.transform.rotation = Quaternion.LookRotation(vec, Vector3.up);
-            this.transform.position = _lassoLoop.position + vec * horDist + Vector3.down * NeckPoint.localPosition.y;
+            this.transform.position = _lassoLoop.position
+                + vec * horDist
+                + Vector3.down * NeckPoint.localPosition.y * this.transform.localScale.x;
         }
     }
 
