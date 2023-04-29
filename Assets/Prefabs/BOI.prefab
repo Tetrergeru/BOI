@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 6761841362264160463}
   - component: {fileID: 5103385543978774393}
   - component: {fileID: 1454406721049309269}
+  - component: {fileID: 9054567940504240849}
   m_Layer: 0
   m_Name: BOI
   m_TagString: Untagged
@@ -334,9 +335,47 @@ MonoBehaviour:
   Body: {fileID: 5103385543978774393}
   CameraMountPoint: {fileID: 7042168897189374719}
   Camera: {fileID: 6705864565997690342}
+  CameraShake: {fileID: 9054567940504240849}
   LassoPrefab: {fileID: 6757897175691700200, guid: c07830a745ef5cd75928bc1cc02343bc,
     type: 3}
   LassoMountPoint: {fileID: 8788579750167462823}
+--- !u!114 &9054567940504240849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281324991109431534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ad97aa26256219a8c44afaa9ec9e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Transform: {fileID: 6705864565997690342}
+  Amplitude:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.023223877
+      value: 0.025238037
+      inSlope: 0.015068829
+      outSlope: 0.015068829
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.10893459
+    - serializedVersion: 3
+      time: 1.0426636
+      value: 0.026611328
+      inSlope: 0.00065415
+      outSlope: 0.00065415
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12417808
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4658782915153568041
 GameObject:
   m_ObjectHideFlags: 0

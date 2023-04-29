@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody Body;
     public Transform CameraMountPoint;
     public Transform Camera;
+    public CameraShake CameraShake;
 
     public GameObject LassoPrefab;
     public Transform LassoMountPoint;
@@ -37,9 +38,14 @@ public class PlayerController : MonoBehaviour
     IEnumerator ThrowLasso(LassoScript lassoScript)
     {
         var collisionFlag = false;
-        lassoScript.CollisionCallback = () =>
+        AnimalScript animal = null;
+        lassoScript.CollisionCallback = (a) =>
         {
+            if (collisionFlag) return;
             collisionFlag = true;
+            animal = a;
+            if (a != null)
+                Debug.Log(a.Name);
         };
 
         lassoScript.StartPoint = LassoMountPoint.position;
@@ -72,14 +78,26 @@ public class PlayerController : MonoBehaviour
 
         lassoScript.lassoMode = LassoMode.Straight;
 
+        var pullingSpeed = 0.5f;
+        if (animal != null)
+        {
+            pullingSpeed = 0.1f;
+            CameraShake.Shake(0.7f);
+            animal.GetPulled(lassoScript, this);
+        }
+
         while (amount > 1.0)
         {
             lassoScript.StartPoint = LassoMountPoint.position;
-            amount -= 0.5f;
+            amount -= pullingSpeed;
             lassoScript.EntPoint = start + forward * amount;
             yield return new WaitForEndOfFrame();
         }
 
+        if (animal != null)
+        {
+            Destroy(animal.gameObject);
+        }
         Destroy(lassoScript.gameObject);
         _lassoThrown = false;
     }

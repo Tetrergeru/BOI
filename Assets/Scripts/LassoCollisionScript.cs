@@ -8,7 +8,8 @@ public class LassoCollisionScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        LassoScript.LoopCollision();
+        var neck = other.GetComponent<NeckScript>();
+        LassoScript.LoopCollision(neck == null ? null : neck.Animal);
     }
 
 }

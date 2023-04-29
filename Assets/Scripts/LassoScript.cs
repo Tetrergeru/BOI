@@ -21,7 +21,7 @@ public class LassoScript : MonoBehaviour
     public Vector3 StartPoint;
     public Vector3 EntPoint;
     public float LoopSize = 1;
-    public Action CollisionCallback = () => { };
+    public Action<AnimalScript> CollisionCallback = (a) => { };
 
     public void Update()
     {
@@ -100,8 +100,8 @@ public class LassoScript : MonoBehaviour
         return Vector2.Distance(a, b);
     }
 
-    public void LoopCollision()
+    public void LoopCollision(AnimalScript a)
     {
-        CollisionCallback();
+        CollisionCallback(a);
     }
 }

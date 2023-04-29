@@ -394,6 +394,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cow
       objectReference: {fileID: 0}
+    - target: {fileID: 4762024880662982113, guid: 8d90c0331e85cb552b3889ff8b42f9db,
+        type: 3}
+      propertyPath: Name
+      value: Cow
+      objectReference: {fileID: 0}
     - target: {fileID: 8040748142864485348, guid: 8d90c0331e85cb552b3889ff8b42f9db,
         type: 3}
       propertyPath: m_RootOrder
