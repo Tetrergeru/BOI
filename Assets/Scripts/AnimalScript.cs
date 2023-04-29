@@ -8,6 +8,7 @@ public enum AnimalState
     Pulled,
     Rided,
     WalkingAround,
+    RunningAround,
 }
 
 public class AnimalScript : MonoBehaviour
@@ -21,7 +22,6 @@ public class AnimalScript : MonoBehaviour
     public CapsuleCollider BodyCollider;
 
     public Transform NeckPoint;
-    public SphereCollider NeckCollider;
 
     public string Name;
 
@@ -30,7 +30,7 @@ public class AnimalScript : MonoBehaviour
 
     private float _timeUntilWalkCheck = 0.5f;
     private Vector2 _walkAroundVector;
-    public float WalkChansInHalfSecond = 0.005f;
+    public float WalkChansInHalfSecond = 0.01f;
 
     void Update()
     {
@@ -44,8 +44,8 @@ public class AnimalScript : MonoBehaviour
                 _timeUntilWalkCheck += 0.5f;
                 if (Random.Range(0.0f, 1.0f) < WalkChansInHalfSecond)
                 {
-                    State = AnimalState.WalkingAround;
-                    _walkAroundVector = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized;
+                    State = (Random.Range(0.0f, 1.0f) < 0.3f ? AnimalState.RunningAround : AnimalState.WalkingAround);
+                    _walkAroundVector = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
                     Debug.Log($"{Name} started walking");
                 }
             }
@@ -67,11 +67,11 @@ public class AnimalScript : MonoBehaviour
                 + vec * horDist
                 + Vector3.down * neckHeight * this.transform.localScale.x;
         }
-        else if (State == AnimalState.WalkingAround)
+        else if (State == AnimalState.WalkingAround || State == AnimalState.RunningAround)
         {
             var direction = new Vector3(_walkAroundVector.x, 0, _walkAroundVector.y);
 
-            Body.velocity = direction * Time.deltaTime * 50;
+            Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50);
             this.transform.rotation = Quaternion.LookRotation(Body.velocity, Vector3.up);
             Debug.Log($"{Name} walking {Body.velocity}");
             SetSpeed(Body.velocity.magnitude);
