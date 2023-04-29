@@ -7,6 +7,7 @@ public enum AnimalState
     Chilling,
     Pulled,
     Rided,
+    WalkingAround,
 }
 
 public class AnimalScript : MonoBehaviour
@@ -27,11 +28,27 @@ public class AnimalScript : MonoBehaviour
     private Transform _lassoLoop;
     private Transform _lassoMountPoint;
 
+    private float _timeUntilWalkCheck = 0.5f;
+    private Vector2 _walkAroundVector;
+    public float WalkChansInHalfSecond = 0.005f;
+
     void Update()
     {
         if (State == AnimalState.Chilling)
         {
             SetSpeed(0);
+
+            _timeUntilWalkCheck -= Time.deltaTime;
+            if (_timeUntilWalkCheck < 0)
+            {
+                _timeUntilWalkCheck += 0.5f;
+                if (Random.Range(0.0f, 1.0f) < WalkChansInHalfSecond)
+                {
+                    State = AnimalState.WalkingAround;
+                    _walkAroundVector = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized;
+                    Debug.Log($"{Name} started walking");
+                }
+            }
         }
         else if (State == AnimalState.Pulled)
         {
@@ -49,6 +66,34 @@ public class AnimalScript : MonoBehaviour
             this.transform.position = _lassoLoop.position
                 + vec * horDist
                 + Vector3.down * neckHeight * this.transform.localScale.x;
+        }
+        else if (State == AnimalState.WalkingAround)
+        {
+            var direction = new Vector3(_walkAroundVector.x, 0, _walkAroundVector.y);
+
+            Body.velocity = direction * Time.deltaTime * 50;
+            this.transform.rotation = Quaternion.LookRotation(Body.velocity, Vector3.up);
+            Debug.Log($"{Name} walking {Body.velocity}");
+            SetSpeed(Body.velocity.magnitude);
+
+            _timeUntilWalkCheck -= Time.deltaTime;
+            if (_timeUntilWalkCheck < 0)
+            {
+                _timeUntilWalkCheck += 0.5f;
+                if (Random.Range(0.0f, 1.0f) < WalkChansInHalfSecond)
+                {
+                    State = AnimalState.Chilling;
+                    Body.velocity = Vector3.zero;
+
+                    Debug.Log($"{Name} stopped walking");
+                }
+                else if (Random.Range(0.0f, 1.0f) < 0.2)
+                {
+                    _walkAroundVector = (
+                        _walkAroundVector + new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 0.5f
+                    ).normalized;
+                }
+            }
         }
     }
 

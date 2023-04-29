@@ -172,7 +172,6 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool("Ride", false);
         }
         Animator.SetFloat("Speed", Body.velocity.magnitude);
-        Debug.Log($"Body.velocity.magnitude = {Body.velocity.magnitude}");
     }
 
     void UpdateTowerAngle()

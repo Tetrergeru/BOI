@@ -71,6 +71,7 @@ MonoBehaviour:
   NeckPoint: {fileID: 8270091064379635003}
   NeckCollider: {fileID: 0}
   Name: 
+  WalkChansInHalfSecond: 0.005
 --- !u!54 &6473569319036475156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,10 +144,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.649451
+  m_Height: 2.1208353
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.56041765, z: 0.14945102}
 --- !u!1 &8137883097707475217
 GameObject:
   m_ObjectHideFlags: 0
