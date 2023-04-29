@@ -222,6 +222,8 @@ MonoBehaviour:
   CameraShake: {fileID: 9054567940504240849}
   LassoPrefab: {fileID: 6757897175691700200, guid: c07830a745ef5cd75928bc1cc02343bc,
     type: 3}
+  LassoPrefab2: {fileID: 6757897175691700200, guid: c77af46b0684015f5bba7530559ecc62,
+    type: 3}
   LassoMountPoint: {fileID: 8788579750167462823}
   BoiTransform: {fileID: 1117334247122379976}
   Tower: []

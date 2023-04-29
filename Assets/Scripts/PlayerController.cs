@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public CameraShake CameraShake;
 
     public GameObject LassoPrefab;
+    public GameObject LassoPrefab2;
     public Transform LassoMountPoint;
 
     public Transform BoiTransform;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
         _cameraDistance = Camera.localPosition.magnitude;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         _towerAngle *= 0.9f;
 
@@ -52,6 +53,13 @@ public class PlayerController : MonoBehaviour
         {
             _lassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
+            var lassoScript = lasso.GetComponent<LassoScript>();
+            StartCoroutine(ThrowLasso(lassoScript));
+        }
+        if (Input.GetKey(KeyCode.R) && !_lassoThrown)
+        {
+            _lassoThrown = true;
+            var lasso = Instantiate(LassoPrefab2);
             var lassoScript = lasso.GetComponent<LassoScript>();
             StartCoroutine(ThrowLasso(lassoScript));
         }
@@ -87,7 +95,7 @@ public class PlayerController : MonoBehaviour
             amount += 0.5f;
             lassoScript.EntPoint = start + forward * amount;
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
 
         var steps = 20.0f;
@@ -95,17 +103,17 @@ public class PlayerController : MonoBehaviour
         {
             lassoScript.LoopSize -= (amount / 2 - 0.3f) / steps;
             lassoScript.CurveStrength = curve;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
 
         lassoScript.lassoMode = LassoMode.Straight;
 
-        var pullingSpeed = 0.5f;
+        var pullingSpeed = 0.7f;
         var end = start + forward * amount;
 
         if (animal != null)
         {
-            pullingSpeed = 0.03f;
+            pullingSpeed = 0.07f;
             end = animal.NeckPoint.position;
 
             CameraShake.Shake(0.7f);
@@ -117,7 +125,7 @@ public class PlayerController : MonoBehaviour
             lassoScript.StartPoint = LassoMountPoint.position;
             amount -= pullingSpeed;
             lassoScript.EntPoint = LassoMountPoint.position + (end - LassoMountPoint.position).normalized * amount;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
 
         if (animal != null)

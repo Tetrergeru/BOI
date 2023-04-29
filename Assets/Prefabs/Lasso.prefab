@@ -85,8 +85,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CurveStrength: 1
   StartPoint: {x: 0, y: 0, z: 0}
   EntPoint: {x: 0, y: 0, z: 0}
+  LoopSize: 1
 --- !u!1001 &6789480745152989409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,6 +96,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8348170357987763467}
     m_Modifications:
+    - target: {fileID: -8921335875294610491, guid: 4853262dd6458e14db8de9266c381226,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8921335875294610491, guid: 4853262dd6458e14db8de9266c381226,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8921335875294610491, guid: 4853262dd6458e14db8de9266c381226,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4853262dd6458e14db8de9266c381226,
         type: 3}
       propertyPath: m_RootOrder
@@ -188,6 +205,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7863811292852918874, guid: 4853262dd6458e14db8de9266c381226,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7863811292852918874, guid: 4853262dd6458e14db8de9266c381226,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7863811292852918874, guid: 4853262dd6458e14db8de9266c381226,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2835795543298663914, guid: 4853262dd6458e14db8de9266c381226,
         type: 3}
@@ -469,8 +501,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CurveStrength: 1
   StartPoint: {x: 0, y: 0, z: 0}
   EntPoint: {x: 0, y: 0, z: 0}
+  LoopSize: 1
 --- !u!4 &6463700924019748618 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4853262dd6458e14db8de9266c381226,
