@@ -12,6 +12,7 @@ public enum AnimalState
 public class AnimalScript : MonoBehaviour
 {
     public Rigidbody Body;
+    public Animator Animator;
 
     public AnimalState State = AnimalState.Chilling;
 
@@ -28,7 +29,11 @@ public class AnimalScript : MonoBehaviour
 
     void Update()
     {
-        if (State == AnimalState.Pulled)
+        if (State == AnimalState.Chilling)
+        {
+            SetSpeed(0);
+        }
+        else if (State == AnimalState.Pulled)
         {
             var neck = NeckPoint.position;
             var it = this.transform.position;
@@ -58,5 +63,19 @@ public class AnimalScript : MonoBehaviour
         State = AnimalState.Rided;
         _lassoLoop = null;
         _lassoMountPoint = null;
+    }
+
+    public void RideSpeed(float speed)
+    {
+        if (State != AnimalState.Rided) return;
+
+        SetSpeed(speed);
+    }
+
+    private void SetSpeed(float speed)
+    {
+        if (Animator == null || !Animator.isActiveAndEnabled) return;
+
+        Animator.SetFloat("Speed", speed);
     }
 }

@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         Lasso();
 
         UpdateTowerAngle();
-        Debug.Log($"_towerAngle {_towerAngle}");
+        UpdateAnimationSpeed();
     }
 
     void LateUpdate()
@@ -158,6 +158,15 @@ public class PlayerController : MonoBehaviour
 
         BoiTransform.parent = parent;
         BoiTransform.transform.localPosition = Vector3.zero;
+    }
+
+    void UpdateAnimationSpeed()
+    {
+        if (Tower.Count > 0)
+        {
+            Tower[0].RideSpeed(Body.velocity.magnitude);
+            Debug.Log($"Body.velocity.magnitude = {Body.velocity.magnitude}");
+        }
     }
 
     void UpdateTowerAngle()
