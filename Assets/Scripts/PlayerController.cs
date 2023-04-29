@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public GameObject LassoPrefab;
     public Transform LassoMountPoint;
 
+    private bool _lassoThrown = false;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -21,11 +23,11 @@ public class PlayerController : MonoBehaviour
         Move();
         Lasso();
     }
-
     void Lasso()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && !_lassoThrown)
         {
+            _lassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
             var lassoScript = lasso.GetComponent<LassoScript>();
             StartCoroutine(ThrowLasso(lassoScript));
@@ -42,21 +44,44 @@ public class PlayerController : MonoBehaviour
 
         lassoScript.StartPoint = LassoMountPoint.position;
         var start = LassoMountPoint.position;
-        var forward = this.transform.forward;
-        var amount = 1.0f;
+        var forward = CameraMountPoint.forward;
+        var amount = 2.0f;
         lassoScript.EntPoint = start + forward * amount;
+
+        lassoScript.Update();
 
         yield return new WaitForFixedUpdate();
 
-        while (!collisionFlag && amount < 20.0f)
+        while (!collisionFlag && amount < 5.0f)
         {
             lassoScript.StartPoint = LassoMountPoint.position;
+            lassoScript.LoopSize = amount / 2;
             amount += 0.1f;
             lassoScript.EntPoint = start + forward * amount;
 
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForEndOfFrame();
         }
+
+        var steps = 20.0f;
+        for (var curve = 1.0f; curve > 0; curve -= 1 / steps)
+        {
+            lassoScript.LoopSize -= (amount / 2 - 0.3f) / steps;
+            lassoScript.CurveStrength = curve;
+            yield return new WaitForEndOfFrame();
+        }
+
+        lassoScript.lassoMode = LassoMode.Straight;
+
+        while (amount > 1.0)
+        {
+            lassoScript.StartPoint = LassoMountPoint.position;
+            amount -= 0.5f;
+            lassoScript.EntPoint = start + forward * amount;
+            yield return new WaitForEndOfFrame();
+        }
+
         Destroy(lassoScript.gameObject);
+        _lassoThrown = false;
     }
 
     void Move()
@@ -69,7 +94,7 @@ public class PlayerController : MonoBehaviour
             Vector3.up,
             mouseX * Time.deltaTime * 200
         );
-        Camera.RotateAround(
+        CameraMountPoint.RotateAround(
             CameraMountPoint.position,
             CameraMountPoint.right,
             mouseY * Time.deltaTime * 200
