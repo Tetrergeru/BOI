@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Body: {fileID: 5103385543978774393}
+  Animator: {fileID: 8774937784633476319}
   CameraMountPoint: {fileID: 7042168897189374719}
   Camera: {fileID: 6705864565997690342}
   CameraShake: {fileID: 9054567940504240849}
@@ -151,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4658782915153568041}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.54000026, y: 0.086000025, z: -1.8900008}
+  m_LocalPosition: {x: 1.2, y: 0.09, z: -5.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -265,14 +266,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5779108448891727347}
-  m_LocalRotation: {x: -0.28281045, y: 0.00044006068, z: -0.003400456, w: 0.9591697}
-  m_LocalPosition: {x: 0.000019349989, y: 0.003829387, z: -0.00062745245}
-  m_LocalScale: {x: 0.010000001, y: 0.010000003, z: 0.0100000035}
+  m_LocalRotation: {x: -0.080827475, y: 0.048430596, z: 0.00023244506, w: 0.9955508}
+  m_LocalPosition: {x: -0.059707843, y: 3.2984874, z: 0.54322195}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6705864565997690342}
-  m_Father: {fileID: 8549050057428051788}
-  m_RootOrder: 1
+  m_Father: {fileID: 1117334247122379976}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &6308418768655251437
 GameObject:
@@ -297,13 +298,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6308418768655251437}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.589, y: 1.52, z: 0.523}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.18157367, y: 0.00953425, z: -0.046939183, w: 0.98221016}
+  m_LocalPosition: {x: 0.0046688225, y: 0.0050099753, z: 0.004807089}
+  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1117334247122379976}
-  m_RootOrder: 2
+  m_Father: {fileID: 925911734158416206}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &579601982158193443
 PrefabInstance:
@@ -394,15 +395,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b286e744deebe1408e8975caf7117de, type: 3}
---- !u!4 &1117334247122379976 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b286e744deebe1408e8975caf7117de,
+--- !u!1 &345160062260215410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b286e744deebe1408e8975caf7117de,
     type: 3}
   m_PrefabInstance: {fileID: 579601982158193443}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8549050057428051788 stripped
+--- !u!95 &8774937784633476319
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345160062260215410}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c02872f70f693ae148541c391b214399, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &925911734158416206 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -94721461852380049, guid: 6b286e744deebe1408e8975caf7117de,
+  m_CorrespondingSourceObject: {fileID: -8875935984978093459, guid: 6b286e744deebe1408e8975caf7117de,
+    type: 3}
+  m_PrefabInstance: {fileID: 579601982158193443}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1117334247122379976 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b286e744deebe1408e8975caf7117de,
     type: 3}
   m_PrefabInstance: {fileID: 579601982158193443}
   m_PrefabAsset: {fileID: 0}

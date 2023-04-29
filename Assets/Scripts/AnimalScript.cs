@@ -43,10 +43,12 @@ public class AnimalScript : MonoBehaviour
             var vec = (_lassoLoop.position - _lassoMountPoint.position).normalized;
             vec.y = 0;
 
+            var neckHeight = NeckPoint.position.y - this.transform.position.y;
+
             this.transform.rotation = Quaternion.LookRotation(-vec, Vector3.up);
             this.transform.position = _lassoLoop.position
                 + vec * horDist
-                + Vector3.down * NeckPoint.localPosition.y * this.transform.localScale.x;
+                + Vector3.down * neckHeight * this.transform.localScale.x;
         }
     }
 
@@ -55,6 +57,10 @@ public class AnimalScript : MonoBehaviour
         _lassoLoop = lasso.LoopBone;
         _lassoMountPoint = player.LassoMountPoint;
         State = AnimalState.Pulled;
+
+        if (Animator == null || !Animator.isActiveAndEnabled) return;
+
+        Animator.SetBool("Resist", true);
     }
 
     public void GetRided()
@@ -63,6 +69,10 @@ public class AnimalScript : MonoBehaviour
         State = AnimalState.Rided;
         _lassoLoop = null;
         _lassoMountPoint = null;
+
+        if (Animator == null || !Animator.isActiveAndEnabled) return;
+
+        Animator.SetBool("Resist", false);
     }
 
     public void RideSpeed(float speed)

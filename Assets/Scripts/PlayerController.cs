@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody Body;
+    public Animator Animator;
 
     public Transform CameraMountPoint;
     public Transform Camera;
@@ -42,8 +43,7 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        Camera.localPosition = _cameraVector * (_cameraDistance + _towerHeight);
-        // Camera.transform.LookAt(transform);
+        Camera.localPosition = _cameraVector * (_cameraDistance * (Tower.Count / 2f + 1));
     }
 
     void Lasso()
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         if (animal != null)
         {
-            pullingSpeed = 0.1f;
+            pullingSpeed = 0.03f;
             end = animal.NeckPoint.position;
 
             CameraShake.Shake(0.7f);
@@ -164,9 +164,15 @@ public class PlayerController : MonoBehaviour
     {
         if (Tower.Count > 0)
         {
+            Animator.SetBool("Ride", true);
             Tower[0].RideSpeed(Body.velocity.magnitude);
-            Debug.Log($"Body.velocity.magnitude = {Body.velocity.magnitude}");
         }
+        else
+        {
+            Animator.SetBool("Ride", false);
+        }
+        Animator.SetFloat("Speed", Body.velocity.magnitude);
+        Debug.Log($"Body.velocity.magnitude = {Body.velocity.magnitude}");
     }
 
     void UpdateTowerAngle()
