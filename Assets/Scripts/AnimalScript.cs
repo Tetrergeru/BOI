@@ -93,6 +93,14 @@ public class AnimalScript : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if (State == AnimalState.Chilling)
+        {
+            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+        }
+    }
+
     public void GetPulled(LassoScript lasso, PlayerController player)
     {
         _lassoLoop = lasso.LoopBone;
@@ -107,6 +115,7 @@ public class AnimalScript : MonoBehaviour
     public void GetRided()
     {
         Destroy(Body);
+
         State = AnimalState.Rided;
         _lassoLoop = null;
         _lassoMountPoint = null;
@@ -114,6 +123,16 @@ public class AnimalScript : MonoBehaviour
         if (Animator == null || !Animator.isActiveAndEnabled) return;
 
         Animator.SetBool("Resist", false);
+    }
+
+    public void StopBeingRided()
+    {
+        Body = this.gameObject.AddComponent<Rigidbody>();
+        State = AnimalState.Chilling;
+        foreach (var t in transform.GetComponentsInChildren<Transform>())
+        {
+            t.gameObject.layer = LayerMask.NameToLayer("Default");
+        }
     }
 
     public void RideSpeed(float speed)

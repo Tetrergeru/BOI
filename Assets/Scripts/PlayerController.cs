@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
         Move();
         Lasso();
+        TowerControls();
 
         UpdateTowerAngle();
         UpdateAnimationSpeed();
@@ -167,7 +168,7 @@ public class PlayerController : MonoBehaviour
         BoiTransform.parent = parent;
         BoiTransform.transform.localPosition = Vector3.zero;
 
-        foreach(var child in this.transform.GetComponentsInChildren<Transform>()) 
+        foreach (var child in this.transform.GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Player");
         }
@@ -196,6 +197,32 @@ public class PlayerController : MonoBehaviour
         BoiTransform.transform.localRotation = Quaternion.Euler(_towerAngle.x, 0, _towerAngle.y);
     }
 
+    void TowerControls()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Tower.Count != 0)
+        {
+            BlowUpTower();
+        }
+    }
+
+    void BlowUpTower()
+    {
+        foreach (var animal in Tower)
+        {
+            animal.transform.parent = this.transform.parent;
+            animal.StopBeingRided();
+            animal.Body.velocity = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 20;
+        }
+        var towerLen = Tower.Count;
+        Tower = new List<AnimalScript>();
+
+        Body.AddForce(new Vector3(0, 700, 0));
+
+        BoiTransform.transform.parent = this.transform;
+        this.transform.position = BoiTransform.transform.position;
+        BoiTransform.transform.localPosition = Vector3.zero;
+    }
+
     void Move()
     {
         var mouseX = Input.GetAxis("Mouse X");
@@ -215,7 +242,8 @@ public class PlayerController : MonoBehaviour
         _towerAngle.x += Input.GetAxis("Vertical") * Time.deltaTime * 10;
         _towerAngle.y += Input.GetAxis("Horizontal") * Time.deltaTime * 10;
 
-        Body.velocity = (transform.forward * Input.GetAxis("Vertical") +
-            transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * 400;
+        Body.velocity = (transform.forward * Input.GetAxis("Vertical")
+            + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * 400
+            + transform.up * Body.velocity.y;
     }
 }
