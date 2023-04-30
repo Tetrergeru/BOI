@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         var mouseX = Input.GetAxis("Mouse X");
-        var mouseY = Input.GetAxis("Mouse Y");
+        var mouseY = -Input.GetAxis("Mouse Y");
 
         this.transform.RotateAround(
             this.transform.position,
