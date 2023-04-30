@@ -9,6 +9,7 @@ public enum AnimalState
     Rided,
     WalkingAround,
     RunningAround,
+    InPen,
 }
 
 public class AnimalScript : MonoBehaviour
@@ -95,10 +96,25 @@ public class AnimalScript : MonoBehaviour
 
     void LateUpdate()
     {
-        if (State == AnimalState.Chilling)
+        if (State == AnimalState.Chilling || State == AnimalState.InPen)
         {
             transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
         }
+    }
+
+    public int GetInPen()
+    {
+        if (State == AnimalState.InPen)
+            return 0;
+        
+        SetSpeed(0);
+        State = AnimalState.InPen;
+        return 100;
+    }
+
+    public bool CanBePulled()
+    {
+        return State == AnimalState.Chilling || State == AnimalState.WalkingAround;
     }
 
     public void GetPulled(LassoScript lasso, PlayerController player)

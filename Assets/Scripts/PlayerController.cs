@@ -73,10 +73,9 @@ public class PlayerController : MonoBehaviour
         lassoScript.CollisionCallback = (a) =>
         {
             if (collisionFlag) return;
-            if (a != null && a.State != AnimalState.Chilling) return;
+            if (a == null || !a.CanBePulled()) return;
             collisionFlag = true;
             animal = a;
-
         };
 
         lassoScript.StartPoint = LassoMountPoint.position;
