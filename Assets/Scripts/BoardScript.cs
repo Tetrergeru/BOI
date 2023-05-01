@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoardScript : MonoBehaviour
 {
     public List<GameObject> Bottles;
+    public List<GameObject> TNTs;
     public PlayerTipScript Player;
     public TMPro.TextMeshPro Text;
     public TMPro.TextMeshPro Text1;
@@ -16,6 +17,10 @@ public class BoardScript : MonoBehaviour
         foreach (var bottle in Bottles)
         {
             bottle.SetActive(false);
+        }
+        foreach (var tnt in TNTs)
+        {
+            tnt.SetActive(false);
         }
     }
 
@@ -52,6 +57,17 @@ public class BoardScript : MonoBehaviour
 
         for (var i = 0; i < count; i++)
             Bottles[i].SetActive(true);
+    }
+
+    public void SetTNTCount(int count)
+    {
+        Debug.Log($"SetTNTCount {count}");
+
+        if (count > TNTs.Count)
+            count = TNTs.Count;
+
+        for (var i = 0; i < count; i++)
+            TNTs[i].SetActive(true);
     }
 
     private void RenderScore()
