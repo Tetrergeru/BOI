@@ -63,9 +63,11 @@ public class AnimalScript : IPullable
         }
         else if (State == AnimalState.WalkingAround || State == AnimalState.RunningAround)
         {
+            var down = Body.velocity.y;
             var direction = new Vector3(_walkAroundVector.x, 0, _walkAroundVector.y);
 
-            Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50);
+            Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50)
+                + Vector3.down * down;
             this.transform.rotation = Quaternion.LookRotation(Body.velocity, Vector3.up);
             SetSpeed(Body.velocity.magnitude);
 
@@ -76,7 +78,8 @@ public class AnimalScript : IPullable
                 if (Random.Range(0.0f, 1.0f) < WalkChansInHalfSecond)
                 {
                     State = AnimalState.Chilling;
-                    Body.velocity = Vector3.zero;
+                    down = Body.velocity.y;
+                    Body.velocity = Vector3.zero + Vector3.down * down; ;
                 }
                 else if (Random.Range(0.0f, 1.0f) < 0.2)
                 {
