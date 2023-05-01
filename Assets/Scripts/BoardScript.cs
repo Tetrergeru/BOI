@@ -53,13 +53,27 @@ public class BoardScript : MonoBehaviour
 
     private void RenderScore()
     {
-        var text = $"Cows: {Player.Animals[AnimalType.Cow]}\n";
-        text += $"Bisons: {Player.Animals[AnimalType.Bison]}\n";
-        text += $"Geese: {Player.Animals[AnimalType.Goose]}\n";
-        text += $"Horses: {Player.Animals[AnimalType.Horse]}\n";
-        text += $"Bottles: {Player.Bottles}\n";
-        text += $"{(Player.Dynamite == 0 ? "???" : "TNT")}: {Player.Dynamite}";
+        var len = 0;
+        foreach (var a in Player.Animals)
+            len = Mathf.Max(len, $"{a.Value}".Length);
+        len = Mathf.Max(len, $"{Player.Bottles}".Length);
+        len = Mathf.Max(len, $"{Player.Dynamite}".Length);
+
+        var text = $"Cows: {PaddedNumber(Player.Animals[AnimalType.Cow], len)}\n";
+        text += $"Bisons: {PaddedNumber(Player.Animals[AnimalType.Bison], len)}\n";
+        text += $"Geese: {PaddedNumber(Player.Animals[AnimalType.Goose], len)}\n";
+        text += $"Horses: {PaddedNumber(Player.Animals[AnimalType.Horse], len)}\n";
+        text += $"Bottles: {PaddedNumber(Player.Bottles, len)}\n";
+        text += $"{(Player.Dynamite == 0 ? "???" : "TNT")}: {PaddedNumber(Player.Dynamite, len)}";
         Text.text = text;
+    }
+
+    private string PaddedNumber(int num, int len)
+    {
+        var str = $"{num}";
+        for (var i = 0 ; i < len - num; i++)
+            str += ' ';
+        return str;
     }
 
     private void ClearScore()
