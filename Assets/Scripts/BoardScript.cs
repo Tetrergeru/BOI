@@ -82,8 +82,6 @@ public class BoardScript : MonoBehaviour
         tl = Mathf.Max(tl, $"{Player.TotalBottles}".Length);
         tl = Mathf.Max(tl, $"{Player.TotalDynamite}".Length);
 
-        Debug.Log($"tl {tl} <<{PaddedNumber(Player.TotalDynamite, tl)}>>");
-
         var text = "<align=\"left\">Delivered:\n</align>";
         text += $"Cows: {PaddedNumber(Player.Animals[AnimalType.Cow], len)}/{PaddedNumber(Player.TotalAnimals[AnimalType.Cow], tl)}\n";
         text += $"Bisons: {PaddedNumber(Player.Animals[AnimalType.Bison], len)}/{PaddedNumber(Player.TotalAnimals[AnimalType.Bison], tl)}\n";
