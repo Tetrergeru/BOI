@@ -114,7 +114,9 @@ public class AnimalScript : MonoBehaviour
 
     public bool CanBePulled()
     {
-        return State == AnimalState.Chilling || State == AnimalState.WalkingAround;
+        return State == AnimalState.Chilling 
+            || State == AnimalState.WalkingAround
+            || State == AnimalState.RunningAround;
     }
 
     public void GetPulled(LassoScript lasso, PlayerController player)
@@ -138,6 +140,7 @@ public class AnimalScript : MonoBehaviour
 
         if (Animator == null || !Animator.isActiveAndEnabled) return;
 
+        SetSpeed(0);
         Animator.SetBool("Resist", false);
     }
 

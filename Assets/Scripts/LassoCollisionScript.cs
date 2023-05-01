@@ -13,7 +13,6 @@ public class LassoCollisionScript : MonoBehaviour
     {
         if (_collision)
         {
-            Debug.Log($"Animal = {_animal != null}");
             LassoScript.LoopCollision(_animal);
         }
         _animal = null;
@@ -22,10 +21,17 @@ public class LassoCollisionScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _collision = true;
+
         var neck = other.GetComponent<NeckScript>();
-        if (neck != null) 
+        if (neck != null)
         {
             _animal = neck.Animal;
+        }
+
+        var animal = other.GetComponent<AnimalScript>();
+        if (animal != null)
+        {
+            _animal = animal;
         }
     }
 }
