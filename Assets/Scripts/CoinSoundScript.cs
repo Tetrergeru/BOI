@@ -9,6 +9,6 @@ public class CoinSoundScript : MonoBehaviour
     public void Update()
     {
         if (!Source.isPlaying)
-            Debug.Log("Stopped");
+            Destroy(this.gameObject);
     }
 }

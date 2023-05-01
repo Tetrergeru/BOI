@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public Transform LassoMountPoint;
 
     public AudioSource WalkAudio;
+    public GameObject WhooshSound;
 
     public Transform BoiTransform;
     public List<AnimalScript> Tower;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !_lassoThrown)
         {
+            Instantiate(WhooshSound);
             _lassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
             var lassoScript = lasso.GetComponent<LassoScript>();

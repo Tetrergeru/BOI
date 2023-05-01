@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8605860414274645784}
   - component: {fileID: 9074931582054443017}
-  - component: {fileID: 7666822713838992191}
+  - component: {fileID: 9010336238722398569}
   m_Layer: 7
-  m_Name: CoinSound
+  m_Name: WhooshSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,9 +43,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fca56fc5e98839a9baf2aab3058854a1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3cb1525aeb3a7da5c9023b96de1644dd, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.325
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -129,7 +129,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7666822713838992191
+--- !u!114 &9010336238722398569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
