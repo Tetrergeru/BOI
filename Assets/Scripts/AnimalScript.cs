@@ -142,6 +142,7 @@ public class AnimalScript : IPullable
     public void StopBeingRided()
     {
         Body = this.gameObject.AddComponent<Rigidbody>();
+        Body.freezeRotation = true;
         State = AnimalState.Chilling;
         foreach (var t in transform.GetComponentsInChildren<Transform>())
         {
