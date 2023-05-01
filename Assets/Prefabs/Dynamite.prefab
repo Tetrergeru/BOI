@@ -67,6 +67,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pull: {fileID: 7293018960957469205}
   Neck: {fileID: 8520414812258465055}
+  Explodable: {fileID: 0}
+  explosion_effect: {fileID: 0}
+  destruction_effect: {fileID: 0}
 --- !u!65 &7269212091728268501
 BoxCollider:
   m_ObjectHideFlags: 0
