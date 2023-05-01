@@ -29,8 +29,9 @@ public class PlayerController : MonoBehaviour
     public CreditsScript Credits;
 
     public GameObject TipToRideTwoCowsAtOnce;
+    public TMPro.TextMeshProUGUI NameText;
 
-    private bool _lassoThrown = false;
+    public bool LassoThrown = false;
     private Vector3 _cameraVector;
     private float _cameraDistance;
     private float _towerHeight;
@@ -61,10 +62,10 @@ public class PlayerController : MonoBehaviour
 
     void Lasso()
     {
-        if (Input.GetMouseButton(0) && !_lassoThrown)
+        if (Input.GetMouseButton(0) && !LassoThrown)
         {
             Instantiate(WhooshSound);
-            _lassoThrown = true;
+            LassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
             var lassoScript = lasso.GetComponent<LassoScript>();
             StartCoroutine(ThrowLasso(lassoScript));
@@ -147,7 +148,7 @@ public class PlayerController : MonoBehaviour
             OnPulled(pullable);
         }
         Destroy(lassoScript.gameObject);
-        _lassoThrown = false;
+        LassoThrown = false;
     }
 
     void OnPulled(IPullable pullable)
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour
         text.transform.position = this.NameSpawnPoint.position;
         text.transform.rotation = this.NameSpawnPoint.rotation;
         text.Text.text = name;
+        NameText.text = name;
     }
 
     void RecalculateTower()

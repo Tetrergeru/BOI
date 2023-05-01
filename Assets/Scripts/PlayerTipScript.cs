@@ -8,6 +8,7 @@ public class PlayerTipScript : MonoBehaviour
 
     public TMPro.TextMeshProUGUI TipText;
     public TMPro.TextMeshProUGUI ScoreText;
+    public TMPro.TextMeshProUGUI NameText;
     public BoardScript Board;
 
     public GameObject CoinScript;
@@ -112,11 +113,14 @@ public class PlayerTipScript : MonoBehaviour
         Stop = true;
         ScoreText.text = "";
         TipText.text = "";
+        NameText.gameObject.SetActive(false);
     }
 
     public void StartRendering()
     {
         Stop = false;
         RenderScore();
+        NameText.gameObject.SetActive(true);
+        GetComponent<PlayerController>().LassoThrown = false;
     }
 }

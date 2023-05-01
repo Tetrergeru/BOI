@@ -10,6 +10,7 @@ public class TNTScript : IPullable
     public GameObject Explodable;
     public VisualEffect explosion_effect;
     public VisualEffect destruction_effect;  
+    public AudioSource ExplosionSound;
 
     override public bool CanBePulled()
     {
@@ -21,6 +22,7 @@ public class TNTScript : IPullable
         if (Explodable != null)
         {
             destruction_effect.Play();
+            ExplosionSound.Play();
             Destroy(Explodable);
         }
         explosion_effect.Play();
