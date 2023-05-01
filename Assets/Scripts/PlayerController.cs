@@ -50,11 +50,6 @@ public class PlayerController : MonoBehaviour
     {
         _towerAngle *= 0.9f;
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Credits.StartCredits();
-        }
-
         Move();
         Lasso();
         TowerControls();
