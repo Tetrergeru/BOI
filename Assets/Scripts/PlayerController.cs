@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
         }
         _towerHeight = height;
 
-        if (Tower.Count > 0) 
+        if (Tower.Count > 0)
         {
             _speedModifier = Tower[0].SpeedModifier;
         }
@@ -247,8 +247,12 @@ public class PlayerController : MonoBehaviour
             this.transform.rotation = Quaternion.Euler(0, camRot.y, 0);
         }
 
-        Body.velocity = (transform.forward * Input.GetAxis("Vertical")
-            + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * 400 * _speedModifier
+        var direction = (
+            transform.forward * Input.GetAxis("Vertical")
+            + transform.right * Input.GetAxis("Horizontal")
+        ).normalized;
+
+        Body.velocity = direction * Time.deltaTime * 400 * _speedModifier
             + transform.up * Body.velocity.y;
     }
 }
