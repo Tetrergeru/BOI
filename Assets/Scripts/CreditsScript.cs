@@ -17,7 +17,7 @@ public class CreditsScript : MonoBehaviour
         Player.StopRendering();
         Player.gameObject.SetActive(false);
         Camera.gameObject.SetActive(true);
-        Text.text = "Press ESC to return to the game";
+        Text.text = "Press Enter to return to the game";
         CreditsText.text = @$"
 We are very glad that you have finished our game!
 
@@ -74,7 +74,7 @@ Viacheslav Ivanchenko
     {
         if (!_moveCredits) return;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             ResumeGame();
             return;
