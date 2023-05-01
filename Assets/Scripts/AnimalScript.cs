@@ -20,7 +20,6 @@ public class AnimalScript : IPullable
     public AnimalState State = AnimalState.Chilling;
 
     public Transform MountPoint;
-    public CapsuleCollider BodyCollider;
 
     public Transform NeckPoint;
 
@@ -31,6 +30,8 @@ public class AnimalScript : IPullable
     private float _timeUntilWalkCheck = 0.5f;
     private Vector2 _walkAroundVector;
     public float WalkChansInHalfSecond = 0.01f;
+
+    public float SpeedModifier = 1f;
 
     void Update()
     {

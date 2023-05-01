@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IPullable : MonoBehaviour
+abstract public class IPullable : MonoBehaviour
 {
     public virtual float SpeedReduction()
     {
@@ -12,10 +12,7 @@ public class IPullable : MonoBehaviour
         return true;
     }
 
-    public virtual void GetPulled(LassoScript lasso, PlayerController player) { }
+    public abstract void GetPulled(LassoScript lasso, PlayerController player);
 
-    public virtual Vector3 NeckPosition()
-    {
-        return Vector3.zero;
-    }
+    public abstract Vector3 NeckPosition();
 }

@@ -73,6 +73,7 @@ MonoBehaviour:
   Name: 
   Pull: {fileID: 727790447592409630}
   WalkChansInHalfSecond: 0.005
+  SpeedModifier: 0.5
 --- !u!114 &727790447592409630
 MonoBehaviour:
   m_ObjectHideFlags: 0
