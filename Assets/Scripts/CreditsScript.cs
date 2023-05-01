@@ -27,7 +27,7 @@ Thank you very much!
 
 Your score is {Player.Score}.
 
-You have delivered {Player.Animals[AnimalType.Cow]} cows, {Player.Animals[AnimalType.Goose]} geese, {Player.Animals[AnimalType.Bison]} bisons and {Player.Animals[AnimalType.Horse]} horses.
+You have delivered {Player.Animals[AnimalType.Cow]}/{Player.TotalAnimals[AnimalType.Cow]} cows, {Player.Animals[AnimalType.Goose]}/{Player.TotalAnimals[AnimalType.Goose]} geese, {Player.Animals[AnimalType.Bison]}/{Player.TotalAnimals[AnimalType.Bison]} bisons and {Player.Animals[AnimalType.Horse]}/{Player.TotalAnimals[AnimalType.Horse]} horses.
 
 You have found {Player.Bottles} bottles and {Player.Dynamite} TNTs.
 

@@ -101,7 +101,7 @@ MonoBehaviour:
   NeckPoint: {fileID: 2634585155624850232}
   Type: 2
   Pull: {fileID: 1685394844426606673}
-  WalkAudio: {fileID: 0}
+  WalkAudio: {fileID: 1736881481349735819}
   SoundSlowdown: 10
   WalkChansInHalfSecond: 0.01
   SpeedModifier: 1.5
@@ -240,7 +240,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e91aa50ebe65bb09ca95dc58810d2a23, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

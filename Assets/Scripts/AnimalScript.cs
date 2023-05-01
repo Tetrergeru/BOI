@@ -159,6 +159,7 @@ public class AnimalScript : IPullable
 
     private void SetSpeed(float speed)
     {
+        if (WalkAudio == null) Debug.Log($"{Type}");
         WalkAudio.pitch = speed / SoundSlowdown;
 
         if (Animator == null || !Animator.isActiveAndEnabled) return;
