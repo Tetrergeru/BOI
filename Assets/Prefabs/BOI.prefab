@@ -685,7 +685,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714978364}
-  m_LocalRotation: {x: 0.116786435, y: 0.33811235, z: -0.042328376, w: 0.9328716}
+  m_LocalRotation: {x: 0.11678641, y: 0.33811226, z: -0.042328365, w: 0.9328715}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -763,7 +763,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028225878}
-  m_LocalRotation: {x: 0.15059587, y: 0.33635163, z: -0.054582346, w: 0.9280136}
+  m_LocalRotation: {x: 0.15059584, y: 0.33635163, z: -0.054582335, w: 0.9280136}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1115,6 +1115,9 @@ MonoBehaviour:
   LassoPrefab: {fileID: 6757897175691700200, guid: c07830a745ef5cd75928bc1cc02343bc,
     type: 3}
   LassoMountPoint: {fileID: 8788579750167462823}
+  NameSpawnPoint: {fileID: 3043988494961923653}
+  NamePrefab: {fileID: 7085794655603049529, guid: 41f8baf25346676f7a7b00393c7c45f4,
+    type: 3}
   WalkAudio: {fileID: 5334217595611184988}
   WhooshSound: {fileID: 304166571216950478, guid: 9a931f0b1d3008ff5802b8010380297e,
     type: 3}
@@ -1138,6 +1141,7 @@ MonoBehaviour:
   Board: {fileID: 0}
   CoinScript: {fileID: 304166571216950478, guid: 3800d396b712821b0b973b6c2a09b816,
     type: 3}
+  Score: 0
   Bottles: 0
   Dynamite: 0
 --- !u!114 &9054567940504240849
@@ -1204,8 +1208,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4658782915153568041}
-  m_LocalRotation: {x: 0.22065385, y: -0.11218582, z: 0.010614474, w: 0.96882075}
-  m_LocalPosition: {x: 293.31735, y: -47.96189, z: 370.6045}
+  m_LocalRotation: {x: 0.2107392, y: 0.29460412, z: -0.014719062, w: 0.9319768}
+  m_LocalPosition: {x: -13.586435, y: 10.988066, z: -18.294022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1330,6 +1334,37 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &5681191091276084167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3043988494961923653}
+  m_Layer: 0
+  m_Name: NameSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3043988494961923653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5681191091276084167}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.086, z: -0.996}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1117334247122379976}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5779108448891727347
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     public GameObject LassoPrefab;
     public Transform LassoMountPoint;
 
+    public Transform NameSpawnPoint;
+    public GameObject NamePrefab;
+
     public AudioSource WalkAudio;
     public GameObject WhooshSound;
 
@@ -55,6 +58,7 @@ public class PlayerController : MonoBehaviour
         TowerControls();
 
         UpdateTowerAngle();
+
         UpdateAnimationSpeed();
     }
 
@@ -154,7 +158,9 @@ public class PlayerController : MonoBehaviour
         switch (pullable)
         {
             case AnimalScript animal:
+
                 AddAnimalToTower(animal);
+                SpawnName();
                 break;
             case BottleScript bottle:
                 Destroy(bottle.gameObject);
@@ -167,7 +173,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void AddAnimalToTower(AnimalScript animal)
+    public void AddAnimalToTower(AnimalScript animal)
     {
         animal.GetRided();
         animal.transform.parent = this.transform;
@@ -177,6 +183,20 @@ public class PlayerController : MonoBehaviour
         Tower.Add(animal);
 
         RecalculateTower();
+    }
+
+    void SpawnName()
+    {
+        var name = "";
+        foreach (var animal in Tower)
+        {
+            name += animal.Type.ToString();
+        }
+        name += "Boy";
+        var text = Instantiate(NamePrefab).GetComponent<NameScript>();
+        text.transform.position = this.NameSpawnPoint.position;
+        text.transform.rotation = this.NameSpawnPoint.rotation;
+        text.Text.text = name;
     }
 
     void RecalculateTower()
