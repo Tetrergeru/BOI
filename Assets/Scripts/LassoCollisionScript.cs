@@ -7,15 +7,15 @@ public class LassoCollisionScript : MonoBehaviour
     public LassoScript LassoScript;
 
     private bool _collision = false;
-    private AnimalScript _animal = null;
+    private IPullable _pullable = null;
 
     void LateUpdate()
     {
         if (_collision)
         {
-            LassoScript.LoopCollision(_animal);
+            LassoScript.LoopCollision(_pullable);
         }
-        _animal = null;
+        _pullable = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,13 +25,13 @@ public class LassoCollisionScript : MonoBehaviour
         var neck = other.GetComponent<NeckScript>();
         if (neck != null)
         {
-            _animal = neck.Animal;
+            _pullable = neck.Pullable;
         }
 
         var animal = other.GetComponent<AnimalScript>();
         if (animal != null)
         {
-            _animal = animal;
+            _pullable = animal;
         }
     }
 }

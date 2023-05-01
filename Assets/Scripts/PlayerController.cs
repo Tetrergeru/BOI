@@ -8,13 +8,13 @@ public class PlayerController : MonoBehaviour
     public Rigidbody Body;
     public Animator Animator;
     public VisualEffect Dust;
+    public PlayerTipScript Tip;
 
     public Transform CameraMountPoint;
     public Transform Camera;
     public CameraShake CameraShake;
 
     public GameObject LassoPrefab;
-    public GameObject LassoPrefab2;
     public Transform LassoMountPoint;
 
     public Transform BoiTransform;
@@ -54,17 +54,10 @@ public class PlayerController : MonoBehaviour
 
     void Lasso()
     {
-        if (Input.GetKey(KeyCode.E) && !_lassoThrown)
+        if (Input.GetMouseButtonDown(0) && !_lassoThrown)
         {
             _lassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
-            var lassoScript = lasso.GetComponent<LassoScript>();
-            StartCoroutine(ThrowLasso(lassoScript));
-        }
-        if (Input.GetKey(KeyCode.R) && !_lassoThrown)
-        {
-            _lassoThrown = true;
-            var lasso = Instantiate(LassoPrefab2);
             var lassoScript = lasso.GetComponent<LassoScript>();
             StartCoroutine(ThrowLasso(lassoScript));
         }
@@ -73,13 +66,14 @@ public class PlayerController : MonoBehaviour
     IEnumerator ThrowLasso(LassoScript lassoScript)
     {
         var collisionFlag = false;
-        AnimalScript animal = null;
+        IPullable pullable = null;
         lassoScript.CollisionCallback = (a) =>
         {
             if (collisionFlag) return;
             if (a == null || !a.CanBePulled()) return;
+
             collisionFlag = true;
-            animal = a;
+            pullable = a;
         };
 
         lassoScript.StartPoint = LassoMountPoint.position;
@@ -115,13 +109,13 @@ public class PlayerController : MonoBehaviour
         var pullingSpeed = 0.7f;
         var end = start + forward * amount;
 
-        if (animal != null)
+        if (pullable != null)
         {
             pullingSpeed = 0.07f;
-            end = animal.NeckPoint.position;
+            end = pullable.NeckPosition();
 
             CameraShake.Shake(0.7f);
-            animal.GetPulled(lassoScript, this);
+            pullable.GetPulled(lassoScript, this);
         }
 
         while (amount > 1.0)
@@ -132,12 +126,26 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        if (animal != null)
+        if (pullable != null)
         {
-            AddAnimalToTower(animal);
+            OnPulled(pullable);
         }
         Destroy(lassoScript.gameObject);
         _lassoThrown = false;
+    }
+
+    void OnPulled(IPullable pullable)
+    {
+        switch (pullable)
+        {
+            case AnimalScript animal:
+                AddAnimalToTower(animal);
+                break;
+            case BottleScript bottle:
+                Destroy(bottle.gameObject);
+                Tip.AddScore(50);
+                break;
+        }
     }
 
     void AddAnimalToTower(AnimalScript animal)

@@ -12,7 +12,7 @@ public enum AnimalState
     InPen,
 }
 
-public class AnimalScript : MonoBehaviour
+public class AnimalScript : IPullable
 {
     public Rigidbody Body;
     public Animator Animator;
@@ -26,8 +26,7 @@ public class AnimalScript : MonoBehaviour
 
     public string Name;
 
-    private Transform _lassoLoop;
-    private Transform _lassoMountPoint;
+    public PullScript Pull;
 
     private float _timeUntilWalkCheck = 0.5f;
     private Vector2 _walkAroundVector;
@@ -49,23 +48,6 @@ public class AnimalScript : MonoBehaviour
                     _walkAroundVector = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
                 }
             }
-        }
-        else if (State == AnimalState.Pulled)
-        {
-            var neck = NeckPoint.position;
-            var it = this.transform.position;
-
-            var horDist = Vector2.Distance(new Vector2(neck.x, neck.z), new Vector2(it.x, it.z));
-
-            var vec = (_lassoLoop.position - _lassoMountPoint.position).normalized;
-            vec.y = 0;
-
-            var neckHeight = NeckPoint.position.y - this.transform.position.y;
-
-            this.transform.rotation = Quaternion.LookRotation(-vec, Vector3.up);
-            this.transform.position = _lassoLoop.position
-                + vec * horDist
-                + Vector3.down * neckHeight * this.transform.localScale.x;
         }
         else if (State == AnimalState.WalkingAround || State == AnimalState.RunningAround)
         {
@@ -106,23 +88,25 @@ public class AnimalScript : MonoBehaviour
     {
         if (State == AnimalState.InPen)
             return 0;
-        
+
         SetSpeed(0);
         State = AnimalState.InPen;
         return 100;
     }
 
-    public bool CanBePulled()
+    override public bool CanBePulled()
     {
-        return State == AnimalState.Chilling 
+        return State == AnimalState.Chilling
             || State == AnimalState.WalkingAround
             || State == AnimalState.RunningAround;
     }
 
-    public void GetPulled(LassoScript lasso, PlayerController player)
+    override public void GetPulled(LassoScript lasso, PlayerController player)
     {
-        _lassoLoop = lasso.LoopBone;
-        _lassoMountPoint = player.LassoMountPoint;
+        Pull.LassoLoop = lasso.LoopBone;
+        Pull.LassoMountPoint = player.LassoMountPoint;
+        Pull.Enabled = true;
+
         State = AnimalState.Pulled;
 
         if (Animator == null || !Animator.isActiveAndEnabled) return;
@@ -135,8 +119,9 @@ public class AnimalScript : MonoBehaviour
         Destroy(Body);
 
         State = AnimalState.Rided;
-        _lassoLoop = null;
-        _lassoMountPoint = null;
+        Pull.LassoLoop = null;
+        Pull.LassoMountPoint = null;
+        Pull.Enabled = false;
 
         if (Animator == null || !Animator.isActiveAndEnabled) return;
 
@@ -150,7 +135,7 @@ public class AnimalScript : MonoBehaviour
         State = AnimalState.Chilling;
         foreach (var t in transform.GetComponentsInChildren<Transform>())
         {
-            t.gameObject.layer = LayerMask.NameToLayer("Default");
+            t.gameObject.layer = LayerMask.NameToLayer("Animal");
         }
     }
 
@@ -166,5 +151,15 @@ public class AnimalScript : MonoBehaviour
         if (Animator == null || !Animator.isActiveAndEnabled) return;
 
         Animator.SetFloat("Speed", speed);
+    }
+
+    override public float SpeedReduction()
+    {
+        return 10;
+    }
+
+    override public Vector3 NeckPosition()
+    {
+        return NeckPoint.position;
     }
 }
