@@ -67,8 +67,10 @@ public class AnimalScript : IPullable
             var direction = new Vector3(_walkAroundVector.x, 0, _walkAroundVector.y);
 
             Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50)
-                + Vector3.down * down;
-            this.transform.rotation = Quaternion.LookRotation(Body.velocity, Vector3.up);
+                - Vector3.down * down;
+
+            Vector3 look = new Vector3(Body.velocity.x, 0, Body.velocity.z);
+            this.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
             SetSpeed(Body.velocity.magnitude);
 
             _timeUntilWalkCheck -= Time.deltaTime;
@@ -88,14 +90,6 @@ public class AnimalScript : IPullable
                     ).normalized;
                 }
             }
-        }
-    }
-
-    void LateUpdate()
-    {
-        if (State == AnimalState.Chilling || State == AnimalState.InPen)
-        {
-            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
         }
     }
 
@@ -148,6 +142,7 @@ public class AnimalScript : IPullable
     public void StopBeingRided()
     {
         Body = this.gameObject.AddComponent<Rigidbody>();
+        Body.freezeRotation = true;
         State = AnimalState.Chilling;
         foreach (var t in transform.GetComponentsInChildren<Transform>())
         {
