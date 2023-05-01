@@ -21,15 +21,10 @@ public class PullScript : MonoBehaviour
 
         var vec = (LassoLoop.position - LassoMountPoint.position).normalized;
         vec.y = 0;
-
-        var neckHeight = NeckPoint.position.y - this.transform.position.y;
+        this.transform.rotation = Quaternion.LookRotation(-vec, Vector3.up);
+        this.transform.position += LassoLoop.position - NeckPoint.position;
 
         // Debug.Log($"neckHeight: {neckHeight}, NeckPoint.position.y: {NeckPoint.position.y}, this.transform.position.y: {this.transform.position.y}");
         // Debug.Log($"LassoLoop.position: {LassoLoop.position}");
-
-        this.transform.rotation = Quaternion.LookRotation(-vec, Vector3.up);
-        this.transform.position = LassoLoop.position
-            + vec * horDist
-            + Vector3.down * neckHeight;
     }
 }
