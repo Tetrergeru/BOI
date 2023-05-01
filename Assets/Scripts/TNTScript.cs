@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BottleScript : IPullable
+public class TNTScript : IPullable
 {
     public PullScript Pull;
     public Transform Neck;
+    public GameObject Explodable;
 
     override public bool CanBePulled()
     {
@@ -14,10 +15,12 @@ public class BottleScript : IPullable
 
     override public TryPullResult GetPulled(LassoScript lasso, PlayerController player)
     {
-        Pull.LassoLoop = lasso.LoopBone;
-        Pull.LassoMountPoint = player.LassoMountPoint;
-        Pull.Enabled = true;
-        return TryPullResult.StartPulling;
+        if (Explodable != null)
+        {
+            Destroy(Explodable);
+        }
+        Destroy(this.gameObject);
+        return TryPullResult.Fail;
     }
 
     override public Vector3 NeckPosition()

@@ -166,8 +166,8 @@ public class VultureScript : IPullable
         var playerPos = player.position;
         var direction = playerPos - eyePos;
 
-        Debug.DrawLine(eyePos, eyePos + direction, Color.red, 0.1f);
-        Debug.DrawLine(eyePos, eyePos + transform.forward * ViewDistance, Color.blue, 0.1f);
+        // Debug.DrawLine(eyePos, eyePos + direction, Color.red, 0.1f);
+        // Debug.DrawLine(eyePos, eyePos + transform.forward * ViewDistance, Color.blue, 0.1f);
 
         var ray = new Ray(eyePos, direction);
         var hit = Physics.Raycast(ray, out var obj, ViewDistance);
@@ -189,12 +189,13 @@ public class VultureScript : IPullable
         return 10;
     }
 
-    public override void GetPulled(LassoScript lasso, PlayerController player)
+    public override TryPullResult GetPulled(LassoScript lasso, PlayerController player)
     {
         State = VultureState.IsPulled;
         Pull.LassoLoop = lasso.LoopBone;
         Pull.LassoMountPoint = player.LassoMountPoint;
         Pull.Enabled = true;
+        return TryPullResult.StartPulling;
     }
 
     public override Vector3 NeckPosition()

@@ -98,7 +98,7 @@ MonoBehaviour:
   State: 0
   MountPoint: {fileID: 18265933145928396}
   NeckPoint: {fileID: 2634585155624850232}
-  Name: Bison
+  Type: 2
   Pull: {fileID: 1685394844426606673}
   WalkChansInHalfSecond: 0.01
   SpeedModifier: 1.5

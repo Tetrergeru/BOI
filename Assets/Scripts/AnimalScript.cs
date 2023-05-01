@@ -12,6 +12,14 @@ public enum AnimalState
     InPen,
 }
 
+public enum AnimalType
+{
+    Goose,
+    Cow,
+    Bison,
+    Horse,
+}
+
 public class AnimalScript : IPullable
 {
     public Rigidbody Body;
@@ -23,7 +31,7 @@ public class AnimalScript : IPullable
 
     public Transform NeckPoint;
 
-    public string Name;
+    public AnimalType Type;
 
     public PullScript Pull;
 
@@ -102,7 +110,7 @@ public class AnimalScript : IPullable
             || State == AnimalState.RunningAround;
     }
 
-    override public void GetPulled(LassoScript lasso, PlayerController player)
+    override public TryPullResult GetPulled(LassoScript lasso, PlayerController player)
     {
         Pull.LassoLoop = lasso.LoopBone;
         Pull.LassoMountPoint = player.LassoMountPoint;
@@ -110,9 +118,10 @@ public class AnimalScript : IPullable
 
         State = AnimalState.Pulled;
 
-        if (Animator == null || !Animator.isActiveAndEnabled) return;
+        if (Animator != null && Animator.isActiveAndEnabled) 
+            Animator.SetBool("Resist", true);
 
-        Animator.SetBool("Resist", true);
+        return TryPullResult.StartPulling;
     }
 
     public void GetRided()

@@ -66,9 +66,8 @@ MonoBehaviour:
   Animator: {fileID: 7653060145602320491}
   State: 0
   MountPoint: {fileID: 7383961139379826708}
-  BodyCollider: {fileID: 4668802830168498386}
   NeckPoint: {fileID: 179006670038126481}
-  Name: Horse
+  Type: 3
   Pull: {fileID: 8783601365792803161}
   WalkChansInHalfSecond: 0.005
   SpeedModifier: 2

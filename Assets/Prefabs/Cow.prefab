@@ -66,11 +66,11 @@ MonoBehaviour:
   Animator: {fileID: 853098401671862572}
   State: 0
   MountPoint: {fileID: 2597072915366605804}
-  BodyCollider: {fileID: 4668802830168498386}
   NeckPoint: {fileID: 8270091064379635003}
-  Name: 
+  Type: 1
   Pull: {fileID: 7055620132471744957}
   WalkChansInHalfSecond: 0.005
+  SpeedModifier: 1
 --- !u!54 &6473569319036475156
 Rigidbody:
   m_ObjectHideFlags: 0

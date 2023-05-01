@@ -107,12 +107,19 @@ public class PlayerController : MonoBehaviour
 
         if (pullable != null)
         {
-            pullingSpeed = 0.07f;
-            end = pullable.NeckPosition();
-            lassoScript.EntPoint = end;
+            var tryPullResult = pullable.GetPulled(lassoScript, this);
+            if (tryPullResult == TryPullResult.StartPulling)
+            {
+                pullingSpeed = 0.07f;
+                end = pullable.NeckPosition();
+                lassoScript.EntPoint = end;
 
-            CameraShake.Shake(0.7f);
-            pullable.GetPulled(lassoScript, this);
+                CameraShake.Shake(0.7f);
+            }
+            else
+            {
+                pullable = null;
+            }
         }
 
         while (amount > 1.0)
@@ -141,6 +148,7 @@ public class PlayerController : MonoBehaviour
             case BottleScript bottle:
                 Destroy(bottle.gameObject);
                 Tip.AddScore(50);
+                Tip.AddBottles(1);
                 break;
             case VultureScript vulture:
                 vulture.StartFleing();
