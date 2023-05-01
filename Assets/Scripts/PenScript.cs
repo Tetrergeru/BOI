@@ -13,5 +13,6 @@ public class PenScript : MonoBehaviour
             return;
 
         Player.AddScore(animal.GetInPen());
+        Player.AddAnimals(animal.Type, 1);
     }
 }

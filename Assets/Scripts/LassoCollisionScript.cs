@@ -28,7 +28,7 @@ public class LassoCollisionScript : MonoBehaviour
             _pullable = neck.Pullable;
         }
 
-        var animal = other.GetComponent<AnimalScript>();
+        var animal = other.GetComponent<IPullable>();
         if (animal != null)
         {
             _pullable = animal;

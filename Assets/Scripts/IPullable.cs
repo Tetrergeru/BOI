@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum TryPullResult 
+{
+    StartPulling,
+    Fail,
+}
+
 abstract public class IPullable : MonoBehaviour
 {
     public virtual float SpeedReduction()
@@ -12,7 +18,7 @@ abstract public class IPullable : MonoBehaviour
         return true;
     }
 
-    public abstract void GetPulled(LassoScript lasso, PlayerController player);
+    public abstract TryPullResult GetPulled(LassoScript lasso, PlayerController player);
 
     public abstract Vector3 NeckPosition();
 }

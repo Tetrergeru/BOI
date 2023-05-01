@@ -12,6 +12,14 @@ public enum AnimalState
     InPen,
 }
 
+public enum AnimalType
+{
+    Goose,
+    Cow,
+    Bison,
+    Horse,
+}
+
 public class AnimalScript : IPullable
 {
     public Rigidbody Body;
@@ -23,9 +31,12 @@ public class AnimalScript : IPullable
 
     public Transform NeckPoint;
 
-    public string Name;
+    public AnimalType Type;
 
     public PullScript Pull;
+
+    public AudioSource WalkAudio;
+    public float SoundSlowdown = 10;
 
     private float _timeUntilWalkCheck = 0.5f;
     private Vector2 _walkAroundVector;
@@ -52,9 +63,11 @@ public class AnimalScript : IPullable
         }
         else if (State == AnimalState.WalkingAround || State == AnimalState.RunningAround)
         {
+            var down = Body.velocity.y;
             var direction = new Vector3(_walkAroundVector.x, 0, _walkAroundVector.y);
 
-            Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50);
+            Body.velocity = direction * Time.deltaTime * (State == AnimalState.RunningAround ? 300 : 50)
+                + Vector3.down * down;
             this.transform.rotation = Quaternion.LookRotation(Body.velocity, Vector3.up);
             SetSpeed(Body.velocity.magnitude);
 
@@ -65,7 +78,8 @@ public class AnimalScript : IPullable
                 if (Random.Range(0.0f, 1.0f) < WalkChansInHalfSecond)
                 {
                     State = AnimalState.Chilling;
-                    Body.velocity = Vector3.zero;
+                    down = Body.velocity.y;
+                    Body.velocity = Vector3.zero + Vector3.down * down; ;
                 }
                 else if (Random.Range(0.0f, 1.0f) < 0.2)
                 {
@@ -102,7 +116,7 @@ public class AnimalScript : IPullable
             || State == AnimalState.RunningAround;
     }
 
-    override public void GetPulled(LassoScript lasso, PlayerController player)
+    override public TryPullResult GetPulled(LassoScript lasso, PlayerController player)
     {
         Pull.LassoLoop = lasso.LoopBone;
         Pull.LassoMountPoint = player.LassoMountPoint;
@@ -110,9 +124,10 @@ public class AnimalScript : IPullable
 
         State = AnimalState.Pulled;
 
-        if (Animator == null || !Animator.isActiveAndEnabled) return;
+        if (Animator != null && Animator.isActiveAndEnabled)
+            Animator.SetBool("Resist", true);
 
-        Animator.SetBool("Resist", true);
+        return TryPullResult.StartPulling;
     }
 
     public void GetRided()
@@ -149,8 +164,9 @@ public class AnimalScript : IPullable
 
     private void SetSpeed(float speed)
     {
-        if (Animator == null || !Animator.isActiveAndEnabled) return;
+        WalkAudio.pitch = speed / SoundSlowdown;
 
+        if (Animator == null || !Animator.isActiveAndEnabled) return;
         Animator.SetFloat("Speed", speed);
     }
 

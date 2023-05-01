@@ -12,11 +12,12 @@ public class BottleScript : IPullable
         return true;
     }
 
-    override public void GetPulled(LassoScript lasso, PlayerController player)
+    override public TryPullResult GetPulled(LassoScript lasso, PlayerController player)
     {
         Pull.LassoLoop = lasso.LoopBone;
         Pull.LassoMountPoint = player.LassoMountPoint;
         Pull.Enabled = true;
+        return TryPullResult.StartPulling;
     }
 
     override public Vector3 NeckPosition()

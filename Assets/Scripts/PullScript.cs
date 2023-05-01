@@ -24,8 +24,8 @@ public class PullScript : MonoBehaviour
 
         var neckHeight = NeckPoint.position.y - this.transform.position.y;
 
-        Debug.Log($"neckHeight: {neckHeight}, NeckPoint.position.y: {NeckPoint.position.y}, this.transform.position.y: {this.transform.position.y}");
-        Debug.Log($"LassoLoop.position: {LassoLoop.position}");
+        // Debug.Log($"neckHeight: {neckHeight}, NeckPoint.position.y: {NeckPoint.position.y}, this.transform.position.y: {this.transform.position.y}");
+        // Debug.Log($"LassoLoop.position: {LassoLoop.position}");
 
         this.transform.rotation = Quaternion.LookRotation(-vec, Vector3.up);
         this.transform.position = LassoLoop.position

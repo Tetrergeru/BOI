@@ -23,6 +23,7 @@ public class VultureScript : IPullable
 
     public Transform Neck;
     public PullScript Pull;
+    public AudioSource Sound;
 
     private Vector3 _startPosition;
     private float _startDirection;
@@ -66,6 +67,8 @@ public class VultureScript : IPullable
                 {
                     if (_coolDown < 0.001)
                     {
+                        Sound.pitch = Random.Range(0.7f, 1.3f);
+                        Sound.Play();
                         Animator.SetTrigger("Attack");
                         _player.GetAttacked(this.transform.position);
                         _coolDown += 40f / 30;
@@ -95,6 +98,7 @@ public class VultureScript : IPullable
                 {
                     Destroy(this.gameObject);
                 }
+                Sound.pitch += 0.003f;
                 FlyTo(_fleingPosition);
                 AddHeight(0.1f);
                 this.FlyingPart.localScale = Vector3.one * _fleingTime / 4;
@@ -123,6 +127,7 @@ public class VultureScript : IPullable
 
     private void StartCombat(PlayerController player)
     {
+        Sound.Play();
         SetHeight(1.5f);
         _player = player;
         State = VultureState.InCombat;
@@ -131,6 +136,9 @@ public class VultureScript : IPullable
 
     public void StartFleing()
     {
+        Sound.loop = true;
+        Sound.pitch = 1.5f;
+        Sound.Play();
         var p = this.transform.position;
         this.transform.position = new Vector3(p.x, p.y + 0.5f, p.z);
         this.SetHeight(0);
@@ -166,8 +174,8 @@ public class VultureScript : IPullable
         var playerPos = player.position;
         var direction = playerPos - eyePos;
 
-        Debug.DrawLine(eyePos, eyePos + direction, Color.red, 0.1f);
-        Debug.DrawLine(eyePos, eyePos + transform.forward * ViewDistance, Color.blue, 0.1f);
+        // Debug.DrawLine(eyePos, eyePos + direction, Color.red, 0.1f);
+        // Debug.DrawLine(eyePos, eyePos + transform.forward * ViewDistance, Color.blue, 0.1f);
 
         var ray = new Ray(eyePos, direction);
         var hit = Physics.Raycast(ray, out var obj, ViewDistance);
@@ -189,12 +197,13 @@ public class VultureScript : IPullable
         return 10;
     }
 
-    public override void GetPulled(LassoScript lasso, PlayerController player)
+    public override TryPullResult GetPulled(LassoScript lasso, PlayerController player)
     {
         State = VultureState.IsPulled;
         Pull.LassoLoop = lasso.LoopBone;
         Pull.LassoMountPoint = player.LassoMountPoint;
         Pull.Enabled = true;
+        return TryPullResult.StartPulling;
     }
 
     public override Vector3 NeckPosition()

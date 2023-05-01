@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     public GameObject LassoPrefab;
     public Transform LassoMountPoint;
 
+    public AudioSource WalkAudio;
+    public GameObject WhooshSound;
+
     public Transform BoiTransform;
     public List<AnimalScript> Tower;
 
@@ -52,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !_lassoThrown)
         {
+            Instantiate(WhooshSound);
             _lassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
             var lassoScript = lasso.GetComponent<LassoScript>();
@@ -107,12 +111,19 @@ public class PlayerController : MonoBehaviour
 
         if (pullable != null)
         {
-            pullingSpeed = 0.07f;
-            end = pullable.NeckPosition();
-            lassoScript.EntPoint = end;
+            var tryPullResult = pullable.GetPulled(lassoScript, this);
+            if (tryPullResult == TryPullResult.StartPulling)
+            {
+                pullingSpeed = 0.07f;
+                end = pullable.NeckPosition();
+                lassoScript.EntPoint = end;
 
-            CameraShake.Shake(0.7f);
-            pullable.GetPulled(lassoScript, this);
+                CameraShake.Shake(0.7f);
+            }
+            else
+            {
+                pullable = null;
+            }
         }
 
         while (amount > 1.0)
@@ -141,6 +152,7 @@ public class PlayerController : MonoBehaviour
             case BottleScript bottle:
                 Destroy(bottle.gameObject);
                 Tip.AddScore(50);
+                Tip.AddBottles(1);
                 break;
             case VultureScript vulture:
                 vulture.StartFleing();
@@ -201,6 +213,8 @@ public class PlayerController : MonoBehaviour
         {
             Animator.SetBool("Ride", false);
         }
+        WalkAudio.pitch = Body.velocity.magnitude / 10f;
+
         Animator.SetFloat("Speed", Body.velocity.magnitude);
         Dust.SetInt("SpawnRate", (int)(Mathf.Pow(Body.velocity.magnitude, 2) * 4));
     }
