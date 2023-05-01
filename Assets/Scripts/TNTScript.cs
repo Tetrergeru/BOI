@@ -19,6 +19,7 @@ public class TNTScript : IPullable
         {
             Destroy(Explodable);
         }
+        player.GetComponent<PlayerTipScript>().AddTNT(1);
         Destroy(this.gameObject);
         return TryPullResult.Fail;
     }

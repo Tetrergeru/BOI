@@ -45,6 +45,13 @@ public class PlayerTipScript : MonoBehaviour
         RenderScore();
     }
 
+    public void AddTNT(int count)
+    {
+        Dynamite += count;
+        Board.SetTNTCount(Dynamite);
+        RenderScore();
+    }
+
     public void ShowTip(string text)
     {
         TipText.text = text;
