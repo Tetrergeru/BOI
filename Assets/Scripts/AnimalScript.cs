@@ -20,7 +20,6 @@ public class AnimalScript : IPullable
     public AnimalState State = AnimalState.Chilling;
 
     public Transform MountPoint;
-    public CapsuleCollider BodyCollider;
 
     public Transform NeckPoint;
 

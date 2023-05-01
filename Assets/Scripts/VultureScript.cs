@@ -62,7 +62,7 @@ public class VultureScript : IPullable
                     _timeNotSeeing = 0;
                 }
 
-                if (Vector3.Distance(this.transform.position, _player.transform.position) < 2f)
+                if (Vector3.Distance(this.transform.position, _player.transform.position) < 3f)
                 {
                     if (_coolDown < 0.001)
                     {
