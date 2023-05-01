@@ -35,6 +35,9 @@ public class AnimalScript : IPullable
 
     public PullScript Pull;
 
+    public AudioSource WalkAudio;
+    public float SoundSlowdown = 10;
+
     private float _timeUntilWalkCheck = 0.5f;
     private Vector2 _walkAroundVector;
     public float WalkChansInHalfSecond = 0.01f;
@@ -118,7 +121,7 @@ public class AnimalScript : IPullable
 
         State = AnimalState.Pulled;
 
-        if (Animator != null && Animator.isActiveAndEnabled) 
+        if (Animator != null && Animator.isActiveAndEnabled)
             Animator.SetBool("Resist", true);
 
         return TryPullResult.StartPulling;
@@ -158,8 +161,9 @@ public class AnimalScript : IPullable
 
     private void SetSpeed(float speed)
     {
-        if (Animator == null || !Animator.isActiveAndEnabled) return;
+        WalkAudio.pitch = speed / SoundSlowdown;
 
+        if (Animator == null || !Animator.isActiveAndEnabled) return;
         Animator.SetFloat("Speed", speed);
     }
 

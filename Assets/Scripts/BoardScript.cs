@@ -61,8 +61,6 @@ public class BoardScript : MonoBehaviour
 
     public void SetTNTCount(int count)
     {
-        Debug.Log($"SetTNTCount {count}");
-
         if (count > TNTs.Count)
             count = TNTs.Count;
 

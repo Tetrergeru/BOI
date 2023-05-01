@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public GameObject LassoPrefab;
     public Transform LassoMountPoint;
 
+    public AudioSource WalkAudio;
+
     public Transform BoiTransform;
     public List<AnimalScript> Tower;
 
@@ -209,6 +211,8 @@ public class PlayerController : MonoBehaviour
         {
             Animator.SetBool("Ride", false);
         }
+        WalkAudio.pitch = Body.velocity.magnitude / 10f;
+
         Animator.SetFloat("Speed", Body.velocity.magnitude);
         Dust.SetInt("SpawnRate", (int)(Mathf.Pow(Body.velocity.magnitude, 2) * 4));
     }

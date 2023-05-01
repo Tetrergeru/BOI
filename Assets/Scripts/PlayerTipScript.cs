@@ -8,6 +8,8 @@ public class PlayerTipScript : MonoBehaviour
     public TMPro.TextMeshProUGUI ScoreText;
     public BoardScript Board;
 
+    public GameObject CoinScript;
+
     private int _score = 0;
     public int Bottles = 0;
     public int Dynamite = 0;
@@ -25,6 +27,7 @@ public class PlayerTipScript : MonoBehaviour
 
     public void AddScore(int score)
     {
+        Instantiate(CoinScript);
         _score += score;
         RenderScore();
     }
