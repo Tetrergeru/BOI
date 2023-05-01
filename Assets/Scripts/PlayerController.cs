@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         // Camera.localPosition = _cameraVector * (_cameraDistance * (Tower.Count / 2f + 1));
         var camRot = Camera.transform.rotation.eulerAngles;
         this.transform.rotation = Quaternion.Euler(0, camRot.y, 0);
-        Debug.Log($"LateUpdate camRot {camRot}");
     }
 
     void Lasso()
@@ -191,7 +190,6 @@ public class PlayerController : MonoBehaviour
         }
         Animator.SetFloat("Speed", Body.velocity.magnitude);
         Dust.SetInt("SpawnRate", (int)(Body.velocity.magnitude * 5));
-        Debug.Log($"SpawnRate {(int)(Body.velocity.magnitude * 5)}");
     }
 
     void UpdateTowerAngle()
