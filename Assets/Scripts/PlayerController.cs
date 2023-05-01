@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public Transform BoiTransform;
     public List<AnimalScript> Tower;
 
+    public CreditsScript Credits;
+
     private bool _lassoThrown = false;
     private Vector3 _cameraVector;
     private float _cameraDistance;
@@ -42,6 +44,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         _towerAngle *= 0.9f;
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Credits.StartCredits();
+        }
 
         Move();
         Lasso();
