@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
 
     void TowerControls()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Tower.Count != 0)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Space)) && Tower.Count != 0)
         {
             BlowUpTower();
         }
