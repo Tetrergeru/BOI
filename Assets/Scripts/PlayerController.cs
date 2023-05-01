@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody Body;
     public Animator Animator;
+    public VisualEffect Dust;
 
     public Transform CameraMountPoint;
     public Transform Camera;
@@ -45,7 +47,10 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        Camera.localPosition = _cameraVector * (_cameraDistance * (Tower.Count / 2f + 1));
+        // Camera.localPosition = _cameraVector * (_cameraDistance * (Tower.Count / 2f + 1));
+        var camRot = Camera.transform.rotation.eulerAngles;
+        this.transform.rotation = Quaternion.Euler(0, camRot.y, 0);
+        Debug.Log($"LateUpdate camRot {camRot}");
     }
 
     void Lasso()
@@ -80,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         lassoScript.StartPoint = LassoMountPoint.position;
         var start = LassoMountPoint.position;
-        var forward = CameraMountPoint.forward;
+        var forward = Camera.forward;
         var amount = 2.0f;
         lassoScript.EntPoint = start + forward * amount;
 
@@ -185,6 +190,8 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool("Ride", false);
         }
         Animator.SetFloat("Speed", Body.velocity.magnitude);
+        Dust.SetInt("SpawnRate", (int)(Body.velocity.magnitude * 5));
+        Debug.Log($"SpawnRate {(int)(Body.velocity.magnitude * 5)}");
     }
 
     void UpdateTowerAngle()
@@ -227,19 +234,8 @@ public class PlayerController : MonoBehaviour
         var mouseX = Input.GetAxis("Mouse X");
         var mouseY = -Input.GetAxis("Mouse Y");
 
-        this.transform.RotateAround(
-            this.transform.position,
-            Vector3.up,
-            mouseX * Time.deltaTime * 200
-        );
-        CameraMountPoint.RotateAround(
-            CameraMountPoint.position,
-            CameraMountPoint.right,
-            mouseY * Time.deltaTime * 200
-        );
-
-        _towerAngle.x += Input.GetAxis("Vertical") * Time.deltaTime * 10;
-        _towerAngle.y += Input.GetAxis("Horizontal") * Time.deltaTime * 10;
+        _towerAngle.x += Input.GetAxis("Vertical") * Time.deltaTime * 30;
+        _towerAngle.y += Input.GetAxis("Horizontal") * Time.deltaTime * 30;
 
         Body.velocity = (transform.forward * Input.GetAxis("Vertical")
             + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * 400
