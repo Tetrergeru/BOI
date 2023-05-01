@@ -32,6 +32,8 @@ public class AnimalScript : IPullable
     private Vector2 _walkAroundVector;
     public float WalkChansInHalfSecond = 0.01f;
 
+    public float SpeedModifier = 1f;
+
     void Update()
     {
         if (State == AnimalState.Chilling)

@@ -71,6 +71,7 @@ MonoBehaviour:
   Name: Horse
   Pull: {fileID: 8783601365792803161}
   WalkChansInHalfSecond: 0.005
+  SpeedModifier: 2
 --- !u!114 &8783601365792803161
 MonoBehaviour:
   m_ObjectHideFlags: 0

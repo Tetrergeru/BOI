@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private float _towerHeight;
     private Vector2 _towerAngle;
 
+    private float _speedModifier = 1;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -45,16 +47,9 @@ public class PlayerController : MonoBehaviour
         UpdateAnimationSpeed();
     }
 
-    void LateUpdate()
-    {
-        // Camera.localPosition = _cameraVector * (_cameraDistance * (Tower.Count / 2f + 1));
-        var camRot = Camera.transform.rotation.eulerAngles;
-        this.transform.rotation = Quaternion.Euler(0, camRot.y, 0);
-    }
-
     void Lasso()
     {
-        if (Input.GetMouseButtonDown(0) && !_lassoThrown)
+        if (Input.GetMouseButton(0) && !_lassoThrown)
         {
             _lassoThrown = true;
             var lasso = Instantiate(LassoPrefab);
@@ -176,6 +171,11 @@ public class PlayerController : MonoBehaviour
         }
         _towerHeight = height;
 
+        if (Tower.Count > 0) 
+        {
+            _speedModifier = Tower[0].SpeedModifier;
+        }
+
         BoiTransform.parent = parent;
         BoiTransform.transform.localPosition = Vector3.zero;
 
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool("Ride", false);
         }
         Animator.SetFloat("Speed", Body.velocity.magnitude);
-        Dust.SetInt("SpawnRate", (int)(Body.velocity.magnitude * 5));
+        Dust.SetInt("SpawnRate", (int)(Mathf.Pow(Body.velocity.magnitude, 2) * 4));
     }
 
     void UpdateTowerAngle()
@@ -227,6 +227,7 @@ public class PlayerController : MonoBehaviour
         }
         var towerLen = Tower.Count;
         Tower = new List<AnimalScript>();
+        _speedModifier = 1;
 
         Body.AddForce(new Vector3(0, 700, 0));
 
@@ -237,14 +238,17 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        var mouseX = Input.GetAxis("Mouse X");
-        var mouseY = -Input.GetAxis("Mouse Y");
-
         _towerAngle.x += Input.GetAxis("Vertical") * Time.deltaTime * 30;
         _towerAngle.y += Input.GetAxis("Horizontal") * Time.deltaTime * 30;
 
+        if (Mathf.Abs(Input.GetAxis("Vertical")) > 0.01f || Mathf.Abs(Input.GetAxis("Horizontal")) > 0.01f)
+        {
+            var camRot = Camera.transform.rotation.eulerAngles;
+            this.transform.rotation = Quaternion.Euler(0, camRot.y, 0);
+        }
+
         Body.velocity = (transform.forward * Input.GetAxis("Vertical")
-            + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * 400
+            + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * 400 * _speedModifier
             + transform.up * Body.velocity.y;
     }
 }
