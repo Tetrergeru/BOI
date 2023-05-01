@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public CreditsScript Credits;
 
+    public GameObject TipToRideTwoCowsAtOnce;
+
     private bool _lassoThrown = false;
     private Vector3 _cameraVector;
     private float _cameraDistance;
@@ -181,6 +183,13 @@ public class PlayerController : MonoBehaviour
         animal.transform.localRotation = new Quaternion();
 
         Tower.Add(animal);
+
+        if (Tower.Count > 1 && TipToRideTwoCowsAtOnce != null)
+        {
+            Destroy(TipToRideTwoCowsAtOnce);
+            TipToRideTwoCowsAtOnce = null;
+            GetComponent<PlayerTipScript>().TipText.text = "";
+        }
 
         RecalculateTower();
     }
