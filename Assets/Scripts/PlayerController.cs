@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _towerAngle;
 
     private float _speedModifier = 1;
+    private float _stunTime = 0;
 
     void Start()
     {
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour
         {
             pullingSpeed = 0.07f;
             end = pullable.NeckPosition();
+            lassoScript.EntPoint = end;
 
             CameraShake.Shake(0.7f);
             pullable.GetPulled(lassoScript, this);
@@ -139,6 +141,9 @@ public class PlayerController : MonoBehaviour
             case BottleScript bottle:
                 Destroy(bottle.gameObject);
                 Tip.AddScore(50);
+                break;
+            case VultureScript vulture:
+                vulture.StartFleing();
                 break;
         }
     }
@@ -238,6 +243,9 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        _stunTime = Mathf.Max(_stunTime - Time.deltaTime, 0);
+        if (_stunTime > 0.01) return;
+
         _towerAngle.x += Input.GetAxis("Vertical") * Time.deltaTime * 30;
         _towerAngle.y += Input.GetAxis("Horizontal") * Time.deltaTime * 30;
 
@@ -254,5 +262,11 @@ public class PlayerController : MonoBehaviour
 
         Body.velocity = direction * Time.deltaTime * 400 * _speedModifier
             + transform.up * Body.velocity.y;
+    }
+
+    public void GetAttacked(Vector3 attackerPosition)
+    {
+        Body.AddForce((this.transform.position - attackerPosition).normalized * 800);
+        _stunTime += 0.2f;
     }
 }
