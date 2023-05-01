@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public CreditsScript Credits;
 
+    public GameObject TipToRideTwoCowsAtOnce;
+
     private bool _lassoThrown = false;
     private Vector3 _cameraVector;
     private float _cameraDistance;
@@ -47,11 +49,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         _towerAngle *= 0.9f;
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Credits.StartCredits();
-        }
 
         Move();
         Lasso();
@@ -182,6 +179,13 @@ public class PlayerController : MonoBehaviour
 
         Tower.Add(animal);
 
+        if (Tower.Count > 1 && TipToRideTwoCowsAtOnce != null)
+        {
+            Destroy(TipToRideTwoCowsAtOnce);
+            TipToRideTwoCowsAtOnce = null;
+            GetComponent<PlayerTipScript>().TipText.text = "";
+        }
+
         RecalculateTower();
     }
 
@@ -257,7 +261,7 @@ public class PlayerController : MonoBehaviour
 
     void TowerControls()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Tower.Count != 0)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Space)) && Tower.Count != 0)
         {
             BlowUpTower();
         }

@@ -9,7 +9,7 @@ public class PenScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var animal = other.GetComponent<AnimalScript>();
-        if (animal == null || animal.State == AnimalState.Rided)
+        if (animal == null || animal.State == AnimalState.Rided || animal.State == AnimalState.InPen)
             return;
 
         Player.AddScore(animal.GetInPen());

@@ -69,7 +69,7 @@ MonoBehaviour:
   Body: {fileID: 5651640232304786991}
   State: 0
   Animator: {fileID: 5379150982250321607}
-  ViewDistance: 15
+  ViewDistance: 5
   Eye: {fileID: 2019019178680357151}
   EyeTrigger: {fileID: 8822084369840430323}
   FlyingPart: {fileID: 2998877127049483119}
@@ -87,8 +87,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 1.03}
 --- !u!114 &1425214406674356627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a5523903fe16a92b6b3fe8fea247164f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.786
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

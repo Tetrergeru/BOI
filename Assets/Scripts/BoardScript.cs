@@ -76,24 +76,32 @@ public class BoardScript : MonoBehaviour
         len = Mathf.Max(len, $"{Player.Bottles}".Length);
         len = Mathf.Max(len, $"{Player.Dynamite}".Length);
 
+        var tl = 0;
+        foreach (var a in Player.TotalAnimals)
+            tl = Mathf.Max(tl, $"{a.Value}".Length);
+        tl = Mathf.Max(tl, $"{Player.TotalBottles}".Length);
+        tl = Mathf.Max(tl, $"{Player.TotalDynamite}".Length);
+
+        Debug.Log($"tl {tl} <<{PaddedNumber(Player.TotalDynamite, tl)}>>");
+
         var text = "<align=\"left\">Delivered:\n</align>";
-        text += $"Cows: {PaddedNumber(Player.Animals[AnimalType.Cow], len)}\n";
-        text += $"Bisons: {PaddedNumber(Player.Animals[AnimalType.Bison], len)}\n";
-        text += $"Geese: {PaddedNumber(Player.Animals[AnimalType.Goose], len)}\n";
-        text += $"Horses: {PaddedNumber(Player.Animals[AnimalType.Horse], len)}\n";
+        text += $"Cows: {PaddedNumber(Player.Animals[AnimalType.Cow], len)}/{PaddedNumber(Player.TotalAnimals[AnimalType.Cow], tl)}\n";
+        text += $"Bisons: {PaddedNumber(Player.Animals[AnimalType.Bison], len)}/{PaddedNumber(Player.TotalAnimals[AnimalType.Bison], tl)}\n";
+        text += $"Geese: {PaddedNumber(Player.Animals[AnimalType.Goose], len)}/{PaddedNumber(Player.TotalAnimals[AnimalType.Goose], tl)}\n";
+        text += $"Horses: {PaddedNumber(Player.Animals[AnimalType.Horse], len)}/{PaddedNumber(Player.TotalAnimals[AnimalType.Horse], tl)}\n";
         Text.text = text;
 
         text = "<align=\"left\">Found:\n</align>";
-        text += $"Bottles: {PaddedNumber(Player.Bottles, len)}\n";
-        text += $"{(Player.Dynamite == 0 ? "???" : "TNT")}: {PaddedNumber(Player.Dynamite, len)}\n";
+        text += $"Bottles: {PaddedNumber(Player.Bottles, len)}/{PaddedNumber(Player.TotalBottles, tl)}\n";
+        text += $"{(Player.Dynamite == 0 ? "???" : "TNT")}: {PaddedNumber(Player.Dynamite, len)}/{PaddedNumber(Player.TotalDynamite, tl)}\n";
         Text1.text = text;
     }
 
     private string PaddedNumber(int num, int len)
     {
         var str = $"{num}";
-        for (var i = 0; i < len - num; i++)
-            str += ' ';
+        for (var i = 0; i < len - str.Length; i++)
+            str = ' ' + str;
         return str;
     }
 

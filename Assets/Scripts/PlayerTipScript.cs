@@ -15,15 +15,35 @@ public class PlayerTipScript : MonoBehaviour
     public int Score = 0;
     public int Bottles = 0;
     public int Dynamite = 0;
+    public int TotalBottles = 0;
+    public int TotalDynamite = 0;
     public Dictionary<AnimalType, int> Animals = new Dictionary<AnimalType, int>();
+    public Dictionary<AnimalType, int> TotalAnimals = new Dictionary<AnimalType, int>();
+
+    public GameObject TipToDeleteWhenDeliverAnimal;
+    public GameObject TipToDeleteWhenCatchBottle;
 
     void Start()
     {
         TipText.text = "";
+
         Animals[AnimalType.Horse] = 0;
         Animals[AnimalType.Goose] = 0;
         Animals[AnimalType.Bison] = 0;
         Animals[AnimalType.Cow] = 0;
+
+        TotalAnimals[AnimalType.Horse] = 0;
+        TotalAnimals[AnimalType.Goose] = 0;
+        TotalAnimals[AnimalType.Bison] = 0;
+        TotalAnimals[AnimalType.Cow] = 0;
+
+        foreach (var animal in GameObject.FindObjectsByType<AnimalScript>(FindObjectsSortMode.None))
+        {
+            TotalAnimals[animal.Type] += 1;
+        }
+        TotalBottles = GameObject.FindObjectsByType<BottleScript>(FindObjectsSortMode.None).Length;
+        TotalDynamite = GameObject.FindObjectsByType<TNTScript>(FindObjectsSortMode.None).Length;
+
         RenderScore();
     }
 
@@ -37,6 +57,13 @@ public class PlayerTipScript : MonoBehaviour
 
     public void AddAnimals(AnimalType animal, int count)
     {
+        if (TipToDeleteWhenDeliverAnimal != null)
+        {
+            Destroy(TipToDeleteWhenDeliverAnimal);
+            TipToDeleteWhenDeliverAnimal = null;
+            TipText.text = "";
+        }
+
         if (!Animals.ContainsKey(animal))
             Animals[animal] = count;
         else
@@ -46,6 +73,12 @@ public class PlayerTipScript : MonoBehaviour
 
     public void AddBottles(int count)
     {
+        if (TipToDeleteWhenCatchBottle != null)
+        {
+            Destroy(TipToDeleteWhenCatchBottle);
+            TipToDeleteWhenCatchBottle = null;
+            TipText.text = "";
+        }
         Bottles += count;
         Board.SetBottleCount(Bottles);
         RenderScore();
