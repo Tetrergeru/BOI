@@ -7,6 +7,7 @@ public class BoardScript : MonoBehaviour
     public List<GameObject> Bottles;
     public PlayerTipScript Player;
     public TMPro.TextMeshPro Text;
+    public TMPro.TextMeshPro Text1;
     public GameObject Bang;
 
     void Start()
@@ -22,7 +23,9 @@ public class BoardScript : MonoBehaviour
     {
         var playerPos = Player.transform.position;
         var r = Quaternion.LookRotation(this.transform.position - playerPos).eulerAngles;
+
         Text.transform.rotation = Quaternion.Euler(0, r.y, 0);
+        Text1.transform.rotation = Quaternion.Euler(0, r.y, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,19 +62,23 @@ public class BoardScript : MonoBehaviour
         len = Mathf.Max(len, $"{Player.Bottles}".Length);
         len = Mathf.Max(len, $"{Player.Dynamite}".Length);
 
-        var text = $"Cows: {PaddedNumber(Player.Animals[AnimalType.Cow], len)}\n";
+        var text = "<align=\"left\">Delivered:\n</align>";
+        text += $"Cows: {PaddedNumber(Player.Animals[AnimalType.Cow], len)}\n";
         text += $"Bisons: {PaddedNumber(Player.Animals[AnimalType.Bison], len)}\n";
         text += $"Geese: {PaddedNumber(Player.Animals[AnimalType.Goose], len)}\n";
         text += $"Horses: {PaddedNumber(Player.Animals[AnimalType.Horse], len)}\n";
-        text += $"Bottles: {PaddedNumber(Player.Bottles, len)}\n";
-        text += $"{(Player.Dynamite == 0 ? "???" : "TNT")}: {PaddedNumber(Player.Dynamite, len)}";
         Text.text = text;
+
+        text = "<align=\"left\">Found:\n</align>";
+        text += $"Bottles: {PaddedNumber(Player.Bottles, len)}\n";
+        text += $"{(Player.Dynamite == 0 ? "???" : "TNT")}: {PaddedNumber(Player.Dynamite, len)}\n";
+        Text1.text = text;
     }
 
     private string PaddedNumber(int num, int len)
     {
         var str = $"{num}";
-        for (var i = 0 ; i < len - num; i++)
+        for (var i = 0; i < len - num; i++)
             str += ' ';
         return str;
     }
@@ -79,5 +86,6 @@ public class BoardScript : MonoBehaviour
     private void ClearScore()
     {
         Text.text = "";
+        Text1.text = "";
     }
 }
