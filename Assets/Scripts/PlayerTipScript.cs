@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerTipScript : MonoBehaviour
 {
+    private bool Stop = false;
+
     public TMPro.TextMeshProUGUI TipText;
     public TMPro.TextMeshProUGUI ScoreText;
     public BoardScript Board;
@@ -27,7 +29,8 @@ public class PlayerTipScript : MonoBehaviour
 
     public void AddScore(int score)
     {
-        Instantiate(CoinScript);
+        if (score != 0)
+            Instantiate(CoinScript);
         _score += score;
         RenderScore();
     }
@@ -67,6 +70,20 @@ public class PlayerTipScript : MonoBehaviour
 
     private void RenderScore()
     {
+        if (Stop) return;
         ScoreText.text = $"Score: {_score}";
+    }
+
+    public void StopRendering()
+    {
+        Stop = true;
+        ScoreText.text = "";
+        TipText.text = "";
+    }
+
+    public void StartRendering()
+    {
+        Stop = false;
+        RenderScore();
     }
 }
