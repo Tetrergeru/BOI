@@ -22,6 +22,8 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
+        if (Transform == null) return;
+
         if (Mathf.Abs(_timeLeft) < 0.00001f)
         {
             Transform.localPosition = _startPosition;

@@ -12,7 +12,7 @@ public class PlayerTipScript : MonoBehaviour
 
     public GameObject CoinScript;
 
-    private int _score = 0;
+    public int Score = 0;
     public int Bottles = 0;
     public int Dynamite = 0;
     public Dictionary<AnimalType, int> Animals = new Dictionary<AnimalType, int>();
@@ -31,7 +31,7 @@ public class PlayerTipScript : MonoBehaviour
     {
         if (score != 0)
             Instantiate(CoinScript);
-        _score += score;
+        Score += score;
         RenderScore();
     }
 
@@ -71,7 +71,7 @@ public class PlayerTipScript : MonoBehaviour
     private void RenderScore()
     {
         if (Stop) return;
-        ScoreText.text = $"Score: {_score}";
+        ScoreText.text = $"Score: {Score}$";
     }
 
     public void StopRendering()
