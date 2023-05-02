@@ -271,6 +271,7 @@ public class PlayerController : MonoBehaviour
 
     void BlowUpTower()
     {
+        NameText.text = "Boi";
         foreach (var animal in Tower)
         {
             animal.transform.parent = this.transform.parent;
