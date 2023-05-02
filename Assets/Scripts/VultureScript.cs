@@ -96,7 +96,6 @@ public class VultureScript : IPullable
                 _fleingTime -= Time.deltaTime;
                 if (_fleingTime < 0)
                 {
-                    _player.GetComponent<PlayerTipScript>().AddScore(100);
                     Destroy(this.gameObject);
                 }
                 Sound.pitch += 0.003f;
@@ -138,6 +137,7 @@ public class VultureScript : IPullable
     public void StartFleing(PlayerController player)
     {
         _player = player;
+        _player.GetComponent<PlayerTipScript>().AddScore(100);
         Sound.loop = true;
         Sound.pitch = 1.5f;
         Sound.Play();
