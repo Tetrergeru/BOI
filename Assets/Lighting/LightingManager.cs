@@ -8,7 +8,7 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private Material Sky_material;
     [SerializeField] private LightingPreset Preset;
 
-    int DayLength = 24;
+    int DayLength = 180;
     //Variables
     [SerializeField] private float TimeOfDay;
     [SerializeField] private VisualEffect FireVFX;
