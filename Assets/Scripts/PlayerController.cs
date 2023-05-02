@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
         {
             name += animal.Type.ToString();
         }
-        name += "Boy";
+        name += "Boi";
         var text = Instantiate(NamePrefab).GetComponent<NameScript>();
         text.transform.position = this.NameSpawnPoint.position;
         text.transform.rotation = this.NameSpawnPoint.rotation;

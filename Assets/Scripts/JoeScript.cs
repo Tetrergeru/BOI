@@ -106,7 +106,7 @@ public class JoeScript : MonoBehaviour
 
             case JoeState.AfterTheQuest:
                 Speak(
-                    "I am in your debt, Boy!",
+                    "I am in your debt, Boi!",
                     5f
                 );
                 break;
