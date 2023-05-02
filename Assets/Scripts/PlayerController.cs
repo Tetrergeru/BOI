@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
                 Tip.AddBottles(1);
                 break;
             case VultureScript vulture:
-                vulture.StartFleing();
+                vulture.StartFleing(this);
                 break;
         }
     }

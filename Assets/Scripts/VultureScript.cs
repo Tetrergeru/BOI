@@ -135,8 +135,9 @@ public class VultureScript : IPullable
         Animator.SetBool("Flying", true);
     }
 
-    public void StartFleing()
+    public void StartFleing(PlayerController player)
     {
+        _player = player;
         Sound.loop = true;
         Sound.pitch = 1.5f;
         Sound.Play();
